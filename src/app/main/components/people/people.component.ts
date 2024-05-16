@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserRes } from '../../core/interfaces/user-res';
+import { baseUrl } from 'src/app/shared/services/autht.service';
 
 function shuffle(array: any[]) {
   let currentIndex = array.length;
@@ -51,4 +52,5 @@ export class PeopleComponent implements OnInit {
 
   loading: boolean = false;
   users: UserRes[] = [];
+  url: string = baseUrl;
 }

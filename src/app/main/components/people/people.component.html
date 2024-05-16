@@ -20,11 +20,15 @@
         *ngFor="let user of users"
       >
         <div *ngIf="user.attributes.image">
-          <img class="w-8" [src]="user.attributes.image" alt="" />
+          <img
+            class="w-16 h-16 rounded-full"
+            [src]="url + user.attributes.image"
+            alt=""
+          />
         </div>
         <div *ngIf="!user.attributes.image">
           <img
-            class="w-8"
+            class="w-16 h-16 rounded-full"
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
             alt=""
           />
