@@ -55,6 +55,8 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  test: string = '';
+
   regForm: FormGroup = new FormGroup({
     name: new FormControl('', [
       Validators.required,
