@@ -76,4 +76,5 @@ export class SavedComponent implements OnInit {
   messages: Message[] | undefined;
   userId: number = 0;
   user: UserRes | undefined;
+  fromSaved: boolean = true;
 }

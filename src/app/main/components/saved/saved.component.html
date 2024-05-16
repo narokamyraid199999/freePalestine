@@ -31,6 +31,7 @@
         <app-explore-card
           (likeEvent)="refreshPage($event)"
           [myPosts]="true"
+          [fromSaved]="fromSaved"
           [post]="elm"
           *ngFor="let elm of allPosts.reverse()"
         ></app-explore-card>

@@ -1,5 +1,5 @@
 <!-- explore cart root -->
-<div class="relative h-[21rem] rounded-3xl">
+<div class="relative egy-container h-[21rem] rounded-3xl">
   <div class="relative h-full rounded-3xl">
     <img
       class="absolute w-full h-full rounded-3xl"
@@ -38,7 +38,23 @@
           </a>
         </div>
         <div *ngIf="myPosts" class="flex items-center gap-x-3">
-          <a title="Update Post" (click)="navigateToPostEdit()">
+          <a
+            class="absolute flex items-center gap-x-3 left-20 xl:left-14 top-1/2 show-eye"
+            [routerLink]="['/main/postDetails', post?.id]"
+          >
+            <span class="text-sm bg-black px-2 py-1 rounded-lg"
+              >Post Details</span
+            >
+            <i
+              class="fa-solid text-[5rem] fa-eye duration-100 hover:cursor-pointer hover:text-indigo-500 text-indigo-300"
+            ></i>
+          </a>
+
+          <a
+            *ngIf="!fromSaved"
+            title="Update Post"
+            (click)="navigateToPostEdit()"
+          >
             <i
               class="fa-solid transition-all duration-100 hover:cursor-pointer hover:text-violet-500 text-violet-300 text-xl fa-pen-to-square"
             ></i>

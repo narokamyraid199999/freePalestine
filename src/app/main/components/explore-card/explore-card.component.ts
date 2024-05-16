@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { PostService } from 'src/app/shared/services/post.service';
 import { PostElm } from '../../core/interfaces/post-elm';
 import { baseUrl } from 'src/app/shared/services/autht.service';
@@ -22,11 +31,19 @@ export class ExploreCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
-    this.getUserById();
   }
 
   getUserId() {
     this.userId = parseInt(`${localStorage.getItem('token')}`);
+    this.getUserById();
+  }
+
+  getUserOwnPost() {
+    this._userService
+      .getUserById(this.post?.attributes.username.data.id)
+      .subscribe((data) => {
+        console.log('owned post data from explore', data);
+      });
   }
 
   getUserById() {
@@ -46,6 +63,7 @@ export class ExploreCardComponent implements OnInit {
 
   @Input() post: PostElm | undefined;
   @Input() myPosts: boolean = false;
+  @Input() fromSaved: boolean = false;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
@@ -56,6 +74,7 @@ export class ExploreCardComponent implements OnInit {
   loading: boolean = false;
   user: UserRes | undefined;
   messages: Message[] | undefined;
+  userOwnPost: UserRes | undefined;
 
   @Output()
   likeEvent: EventEmitter<string> = new EventEmitter();

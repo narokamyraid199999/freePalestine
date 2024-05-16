@@ -1,129 +1,133 @@
 <!-- profile root -->
-<section>
-  <div class="container mx-auto px-20 pt-16 text-white roboto-regular">
-    <!-- user details root -->
-    <div class="flex flex-col xl:flex-row gap-y-8 xl:gap-y-0 justify-between">
-      <!-- user image and details -->
-      <div class="flex items-center gap-x-8">
-        <img
-          class="w-40 h-40 shadow-2xl drop-shadow-lg rounded-full"
-          *ngIf="user?.attributes?.image"
-          [src]="url + user?.attributes?.image"
-          alt=""
-        />
-        <img
-          class="w-36"
-          *ngIf="!user?.attributes?.image"
-          src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
-          alt=""
-        />
-        <!-- user text info -->
-        <div>
-          <div class="flex items-center gap-x-4">
-            <h2
-              class="capitalize text-4xl font-medium transition-all duration-200 hover:text-indigo-400 hover:cursor-pointer"
-            >
-              {{ user?.attributes?.name }}
-            </h2>
+<p-scrollPanel class="relative" [style]="{ width: '100%', height: '100vh' }">
+  <section>
+    <div class="container mx-auto px-[7.5%] pt-16 text-white roboto-regular">
+      <!-- user details root -->
+      <div class="flex flex-col xl:flex-row gap-y-8 xl:gap-y-0 justify-between">
+        <!-- user image and details -->
+        <div class="flex items-center gap-x-8">
+          <img
+            class="w-40 h-40 shadow-2xl drop-shadow-lg rounded-full"
+            *ngIf="user?.attributes?.image"
+            [src]="url + user?.attributes?.image"
+            alt=""
+          />
+          <img
+            class="w-36"
+            *ngIf="!user?.attributes?.image"
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+          <!-- user text info -->
+          <div>
+            <div class="flex items-center gap-x-4">
+              <h2
+                class="capitalize text-4xl font-medium transition-all duration-200 hover:text-indigo-400 hover:cursor-pointer"
+              >
+                {{ user?.attributes?.name }}
+              </h2>
+              <a
+                *ngIf="isMyProfile"
+                title="Edit my profile"
+                class="inline-block lg:hidden text-indigo-400 transition-all duration-150 hover:cursor-pointer hover:text-indigo-500"
+                [routerLink]="['/main/editProfile', user?.id]"
+              >
+                <i class="fa-regular text-3xl fa-pen-to-square"></i>
+              </a>
+            </div>
+            <p class="mt-1 text-gray-300">@{{ user?.attributes?.username }}</p>
+            <div class="my-5">
+              <p class="w-full xl:w-3/4" *ngIf="user?.attributes?.bio">
+                {{ user?.attributes?.bio }}
+              </p>
+              <p *ngIf="!user?.attributes?.bio">
+                Updating my bio, one decade at a time
+              </p>
+            </div>
+            <!-- post details -->
+            <div class="flex items-center mt-6 gap-x-8">
+              <div class="flex items-center gap-x-2">
+                <p *ngIf="postsNumber" class="text-indigo-400">
+                  {{ postsNumber }}
+                </p>
+                <p *ngIf="!postsNumber" class="text-indigo-400">0</p>
+                <p>Posts</p>
+              </div>
+
+              <!-- foolowers -->
+              <div class="flex items-center gap-x-2">
+                <p class="text-indigo-400">
+                  {{
+                    user?.attributes?.followers?.data
+                      ? user?.attributes?.followers?.data
+                      : 0
+                  }}
+                </p>
+
+                <p>Followers</p>
+              </div>
+
+              <!-- following -->
+              <div class="flex items-center gap-x-2">
+                <p class="text-indigo-400">
+                  {{
+                    user?.attributes?.following?.data
+                      ? user?.attributes?.following?.data
+                      : 0
+                  }}
+                </p>
+                <p>following</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- edit button -->
+        <div class="hidden lg:inline-block" *ngIf="isMyProfile">
+          <a [routerLink]="['/main/editProfile', user?.id]">
+            <p-button
+              icon="fa-solid fa-pen-to-square"
+              styleClass="bg-neutral-800  border-neutral-800 h-14 px-6 text-white  "
+              label="Edit"
+            ></p-button>
+          </a>
+        </div>
+      </div>
+      <!-- user post -->
+
+      <div>
+        <div class="flex gap-y-4 flex-row items-center mt-14 lg:mt-20">
+          <!-- posts -->
+          <div>
             <a
-              *ngIf="isMyProfile"
-              title="Edit my profile"
-              class="inline-block lg:hidden text-indigo-400 transition-all duration-150 hover:cursor-pointer hover:text-indigo-500"
-              [routerLink]="['/main/editProfile', user?.id]"
+              class="flex mb-6 px-16 bg-neutral-900 border-neutral-900 items-center gap-x-4 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+              routerLink="posts"
+              routerLinkActive="bg-neutral-800 border-neutral-800 text-white"
             >
-              <i class="fa-regular text-3xl fa-pen-to-square"></i>
+              <i
+                class="text-2xl fa-regular link-icon fa-user text-indigo-400"
+              ></i>
+              <p>Posts</p>
             </a>
           </div>
-          <p class="mt-1 text-gray-300">@{{ user?.attributes?.username }}</p>
-          <div class="my-5">
-            <p class="w-full xl:w-3/4" *ngIf="user?.attributes?.bio">
-              {{ user?.attributes?.bio }}
-            </p>
-            <p *ngIf="!user?.attributes?.bio">
-              Updating my bio, one decade at a time
-            </p>
-          </div>
-          <!-- post details -->
-          <div class="flex items-center mt-6 gap-x-8">
-            <div class="flex items-center gap-x-2">
-              <p *ngIf="postsNumber" class="text-indigo-400">
-                {{ postsNumber }}
-              </p>
-              <p *ngIf="!postsNumber" class="text-indigo-400">0</p>
-              <p>Posts</p>
-            </div>
 
-            <!-- foolowers -->
-            <div class="flex items-center gap-x-2">
-              <p class="text-indigo-400">
-                {{
-                  user?.attributes?.followers?.data
-                    ? user?.attributes?.followers?.data
-                    : 0
-                }}
-              </p>
-
-              <p>Followers</p>
-            </div>
-
-            <!-- following -->
-            <div class="flex items-center gap-x-2">
-              <p class="text-indigo-400">
-                {{
-                  user?.attributes?.following?.data
-                    ? user?.attributes?.following?.data
-                    : 0
-                }}
-              </p>
-              <p>following</p>
-            </div>
+          <!-- saved posts -->
+          <div>
+            <a
+              class="flex bg-neutral-900 border-neutral-900 px-14 items-center gap-x-4 mb-6 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+              routerLinkActive="bg-neutral-800 border-neutral-800 text-white"
+              routerLink="savedPosts"
+            >
+              <i
+                class="fa-solid text-2xl link-icon text-indigo-400 fa-house"
+              ></i>
+              <p>Liked Posts</p>
+            </a>
           </div>
         </div>
-      </div>
-
-      <!-- edit button -->
-      <div class="hidden lg:inline-block" *ngIf="isMyProfile">
-        <a [routerLink]="['/main/editProfile', user?.id]">
-          <p-button
-            icon="fa-solid fa-pen-to-square"
-            styleClass="bg-neutral-800  border-neutral-800 h-14 px-6 text-white  "
-            label="Edit"
-          ></p-button>
-        </a>
+        <!-- router outlet -->
+        <router-outlet></router-outlet>
       </div>
     </div>
-    <!-- user post -->
-
-    <div>
-      <div class="flex gap-y-4 flex-row items-center mt-8 lg:mt-20">
-        <!-- posts -->
-        <div>
-          <a
-            class="flex mb-6 px-16 bg-neutral-900 border-neutral-900 items-center gap-x-4 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
-            routerLink="posts"
-            routerLinkActive="bg-neutral-800 border-neutral-800 text-white"
-          >
-            <i
-              class="text-2xl fa-regular link-icon fa-user text-indigo-400"
-            ></i>
-            <p>Posts</p>
-          </a>
-        </div>
-
-        <!-- saved posts -->
-        <div>
-          <a
-            class="flex bg-neutral-900 border-neutral-900 px-14 items-center gap-x-4 mb-6 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
-            routerLinkActive="bg-neutral-800 border-neutral-800 text-white"
-            routerLink="savedPosts"
-          >
-            <i class="fa-solid text-2xl link-icon text-indigo-400 fa-house"></i>
-            <p>Liked Posts</p>
-          </a>
-        </div>
-      </div>
-      <!-- router outlet -->
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</section>
+  </section>
+</p-scrollPanel>

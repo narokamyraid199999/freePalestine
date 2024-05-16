@@ -6,3 +6,15 @@
   color: red;
   cursor: pointer;
 }
+
+.show-eye {
+  transform: translateY(5rem);
+  transition: all ease-in-out 0.4s;
+  opacity: 0;
+}
+
+.egy-container:hover .show-eye {
+  transform: translateY(-2rem);
+
+  opacity: 1;
+}

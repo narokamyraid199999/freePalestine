@@ -22,6 +22,7 @@
     "aos": "^2.3.4",
     "fs": "^0.0.1-security",
     "jquery": "^3.7.1",
+    "ngx-infinite-scroll": "^16.0.0",
     "ngx-owl-carousel-o": "^16.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^16.2.0",
