@@ -107,7 +107,7 @@
             <a
               class="hover:text-violet-400 transition-all duration-200"
               title="My Profile"
-              routerLink="/main/profile/11"
+              [routerLink]="['/main/profile', userId]"
             >
               <h2 *ngIf="!user" class="font-medium text-xl">Faizan</h2>
               <h2 *ngIf="user?.attributes?.name" class="font-medium text-xl">
