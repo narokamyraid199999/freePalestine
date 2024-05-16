@@ -53,11 +53,7 @@ export class PostCardComponent implements OnInit {
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   goToProfile() {
-    // this._Router.navigate([
-    //   'main/profile',
-    //   this.post?.attributes.username.data.id,
-    // ]);
-    alert('go to user profile');
+    this._Router.navigate(['main/profile', this.userId]);
   }
 
   navigateToPostEdit() {

@@ -107,11 +107,6 @@ export class EditProfileComponent implements OnInit {
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
         this.loading = false;
-        this._messageService.add({
-          severity: 'info',
-          summary: 'File Uploaded',
-          detail: 'File has been uploaded successfully',
-        });
       },
       error: (error) => {
         console.log('error uploading', error);
