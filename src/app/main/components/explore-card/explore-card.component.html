@@ -18,9 +18,9 @@
         <!-- user image and name -->
         <div class="flex gap-x-2 items-center">
           <img
-            class="w-8"
+            class="w-10 h-10 rounded-full"
             *ngIf="post?.attributes?.username?.data?.attributes?.image"
-            [src]="post?.attributes?.username?.data?.attributes?.image"
+            [src]="url + post?.attributes?.username?.data?.attributes?.image"
             alt=""
           />
           <img
