@@ -132,6 +132,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   editProfile() {
+    this.loading = true;
     let data = {
       data: {
         ...this.regForm.value,
@@ -148,8 +149,27 @@ export class EditProfileComponent implements OnInit {
     this._userService.updateUserInfo(data, this.userId).subscribe({
       next: (data) => {
         console.log('user updated successfully', data);
+        this.loading = false;
+        this._messageService.add({
+          severity: 'success',
+          detail: 'Profile updated successfully',
+        });
+
+        setTimeout(() => {
+          this.messages = [];
+        }, 5000);
       },
       error: (error) => {
+        this.loading = false;
+        this._messageService.add({
+          severity: 'error',
+          detail: 'Failed to update profile',
+        });
+
+        setTimeout(() => {
+          this.messages = [];
+        }, 5000);
+
         console.log('user error', error);
       },
     });
