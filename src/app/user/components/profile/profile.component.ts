@@ -18,7 +18,9 @@ import { ToastModule } from 'primeng/toast';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ActivatedRoute } from '@angular/router';
 import { UserRes } from 'src/app/main/core/interfaces/user-res';
-import { InputTextarea, InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
+import { baseUrl } from 'src/app/shared/services/autht.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +35,7 @@ import { InputTextarea, InputTextareaModule } from 'primeng/inputtextarea';
     InputTextareaModule,
     FormsModule,
     ReactiveFormsModule,
+    FileUploadModule,
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
@@ -52,10 +55,9 @@ export class EditProfileComponent implements OnInit {
   getUserId() {
     this._activateRouter.paramMap.subscribe((data) => {
       this.userId = parseInt(`${data.get('id')}`);
+      this.getUserById();
     });
   }
-
-  test: string = '';
 
   regForm: FormGroup = new FormGroup({
     name: new FormControl('', [
@@ -89,9 +91,10 @@ export class EditProfileComponent implements OnInit {
   postid: number | undefined;
   userId: number | undefined;
   user: UserRes | undefined;
+  url: string = baseUrl;
 
   onFileSelected(event: any): void {
-    this.uploadedImage = event.target.files[0];
+    this.uploadedImage = event.files[0];
     console.log(this.uploadedImage);
     this._userService.upload(this.uploadedImage).subscribe({
       next: (data: uploadRes) => {
@@ -110,5 +113,45 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  editProfile() {}
+  getUserById() {
+    this._userService.getUserById(this.userId).subscribe({
+      next: (data) => {
+        this.user = data.data;
+        this.regForm.setValue({
+          name: this.user?.attributes.name,
+          email: this.user?.attributes.email,
+          bio: this.user?.attributes.bio,
+          username: this.user?.attributes.username,
+        });
+        console.log('user data from edit profile', this.user);
+      },
+      error: (error) => {
+        console.log('user error', error);
+      },
+    });
+  }
+
+  editProfile() {
+    let data = {
+      data: {
+        ...this.regForm.value,
+        image: this.imageUrl,
+      },
+    };
+
+    Object.keys(data.data).forEach((key) => {
+      if (!data.data[key]) {
+        delete data.data[key];
+      }
+    });
+
+    this._userService.updateUserInfo(data, this.userId).subscribe({
+      next: (data) => {
+        console.log('user updated successfully', data);
+      },
+      error: (error) => {
+        console.log('user error', error);
+      },
+    });
+  }
 }

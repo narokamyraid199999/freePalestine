@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserRes } from '../../core/interfaces/user-res';
+import { baseUrl } from 'src/app/shared/services/autht.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +34,7 @@ export class ProfileComponent implements OnInit {
   savedPostCount: number = 0;
   followerCount: number = 0;
   followingCount: number = 0;
-
+  url: string = baseUrl;
   user: UserRes | undefined;
 
   getUserById() {

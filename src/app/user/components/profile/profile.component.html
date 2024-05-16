@@ -8,14 +8,15 @@
       <!-- header -->
       <div class="flex items-center gap-x-4">
         <i class="fa-solid text-4xl fa-pen-to-square"></i>
-        <h2 class="permanent-marker-regular text-4xl">Edit Profile</h2>
+        <h2 class="permanent-marker-regular text-3xl">Edit Profile</h2>
       </div>
       <form class="mt-6" [formGroup]="regForm">
         <!-- user image -->
-        <div class="my-14">
+        <div class="mb-12 mt-14 flex items-center gap-x-8">
           <img
+            class="w-32 h-32 shadow-2xl drop-shadow-lg rounded-full"
             *ngIf="user?.attributes?.image"
-            [src]="user?.attributes?.image"
+            [src]="url + user?.attributes?.image"
             alt=""
           />
           <img
@@ -24,13 +25,30 @@
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
             alt=""
           />
+          <div>
+            <p-fileUpload
+              mode="basic"
+              chooseLabel="Change Profile Photo"
+              chooseIcon="pi pi-upload"
+              name="demo[]"
+              [auto]="true"
+              url="https://www.primefaces.org/cdn/api/upload.php"
+              accept="image/*"
+              [maxFileSize]="1000000"
+              (onUpload)="onFileSelected($event)"
+            />
+
+            <!-- <input
+              (change)="onFileSelected($event)"
+              type="file"
+              value="Select from comput"
+            /> -->
+          </div>
         </div>
 
         <!-- name part -->
         <div>
-          <p class="mb-3 merriweather-regular">
-            Name<span class="text-red-400"> *</span>
-          </p>
+          <p class="mb-3 merriweather-regular">Name</p>
           <input
             pInputText
             class="w-full bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
@@ -42,9 +60,7 @@
 
         <!-- username part -->
         <div class="mt-10">
-          <p class="mb-3 merriweather-regular">
-            Username<span class="text-red-400"> *</span>
-          </p>
+          <p class="mb-3 merriweather-regular">Username</p>
           <input
             pInputText
             class="w-full bg-zinc-900 h-14 text-white rounded-md border-zinc-800"
@@ -56,9 +72,7 @@
 
         <!-- email part -->
         <div class="mt-10">
-          <p class="mb-3 merriweather-regular">
-            Email<span class="text-red-400"> *</span>
-          </p>
+          <p class="mb-3 merriweather-regular">Email</p>
           <input
             pInputText
             class="w-full bg-zinc-900 h-14 text-white rounded-md border-zinc-800"

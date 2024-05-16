@@ -6,8 +6,9 @@
       <!-- user image and details -->
       <div class="flex items-center gap-x-8">
         <img
+          class="w-40 h-40 shadow-2xl drop-shadow-lg rounded-full"
           *ngIf="user?.attributes?.image"
-          [src]="user?.attributes?.image"
+          [src]="url + user?.attributes?.image"
           alt=""
         />
         <img
