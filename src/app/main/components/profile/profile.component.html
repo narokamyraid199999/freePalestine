@@ -26,7 +26,9 @@
           </h2>
           <p class="mt-1 text-gray-300">@{{ user?.attributes?.username }}</p>
           <div class="my-5">
-            <p *ngIf="user?.attributes?.bio">{{ user?.attributes?.bio }}</p>
+            <p class="w-full xl:w-3/4" *ngIf="user?.attributes?.bio">
+              {{ user?.attributes?.bio }}
+            </p>
             <p *ngIf="!user?.attributes?.bio">
               Updating my bio, one decade at a time
             </p>
@@ -83,11 +85,11 @@
     <!-- user post -->
 
     <div>
-      <div class="flex items-center mt-20">
+      <div class="flex gap-y-4 flex-col lg:flex-row items-center mt-20">
         <!-- posts -->
         <div>
           <a
-            class="flex px-16 bg-neutral-900 border-neutral-900 items-center gap-x-4 mb-6 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+            class="flex lg:mb-6 px-16 bg-neutral-900 border-neutral-900 items-center gap-x-4 link py-4 rounded-md text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
             routerLink="posts"
             routerLinkActive="bg-neutral-800 border-neutral-800 text-white"
           >
