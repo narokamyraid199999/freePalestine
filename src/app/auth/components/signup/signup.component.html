@@ -1,0 +1,101 @@
+<div class="container text-white mx-auto">
+  <div class="flex flex-col items-center justify-center w-full h-screen">
+    <!-- welcomelogin -->
+    <h2
+      class="text-4xl flex items-center gap-x-2 font-medium mb-6 permanent-marker-regular"
+    >
+      <img
+        class="w-8 select-none"
+        src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+        alt=""
+      /><span class="">FreePalestine</span>
+    </h2>
+    <p class="text-4xl font-bold mb-3 merriweather-regular">
+      Create a new account
+    </p>
+    <p class="text-md text-gray-400">
+      To use freePalestine! please enter details.
+    </p>
+    <form class="mt-6" [formGroup]="regForm">
+      <!-- name part -->
+      <div>
+        <p class="mb-2 merriweather-regular">
+          Name<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="name"
+          formControlName="name"
+          type="text"
+        />
+      </div>
+
+      <!-- username part -->
+      <div class="mt-5">
+        <p class="mb-2 merriweather-regular">
+          Username<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="Username"
+          formControlName="username"
+          type="text"
+        />
+      </div>
+
+      <!-- email part -->
+      <div class="mt-5">
+        <p class="mb-2 merriweather-regular">
+          Email<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="email"
+          formControlName="email"
+          type="email"
+        />
+      </div>
+
+      <!-- password -->
+      <div class="mt-5">
+        <p class="mb-2 merriweather-regular">
+          Password<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="password"
+          formControlName="password"
+          type="password"
+        />
+      </div>
+
+      <!-- repassword -->
+      <div class="mt-5">
+        <p class="mb-2 merriweather-regular">
+          rePassword<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="password"
+          formControlName="rePassword"
+          type="password"
+        />
+      </div>
+      <p-button
+        (onClick)="signUP()"
+        [loading]="loading"
+        styleClass="w-[30rem] bg-violet-400 border-violet-400 mt-6 merriweather-regular"
+        label="Sign Up"
+      ></p-button>
+      <p class="text-center mt-6 font-light text-lg">
+        Already have an account?
+        <a routerLink="/auth/login" class="text-violet-500">Login</a>
+      </p>
+    </form>
+  </div>
+</div>

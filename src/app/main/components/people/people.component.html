@@ -1,0 +1,46 @@
+<p-scrollPanel [style]="{ width: '100%', height: '100vh' }">
+  <!-- people root -->
+  <div class="pt-12 container px-32 py-[10rem]">
+    <p class="permanent-marker-regular mb-12 text-4xl">All Users</p>
+    <div *ngIf="loading" class="grid grid-cols-3 gap-12">
+      <p-skeleton
+        *ngFor="let elm of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+        height="10rem"
+      ></p-skeleton>
+    </div>
+    <div *ngIf="!loading" class="grid grid-cols-3 gap-12">
+      <div
+        class="shadow-2xl py-8 flex flex-col gap-y-2 items-center justify-center border-x-2 border-y-2 border-gray-900"
+        *ngFor="let user of users"
+      >
+        <div *ngIf="user.attributes.image">
+          <img class="w-8" [src]="user.attributes.image" alt="" />
+        </div>
+        <div *ngIf="!user.attributes.image">
+          <img
+            class="w-8"
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+        </div>
+
+        <div class="flex flex-col items-center justify-center my-2">
+          <a [routerLink]="['/main/profile', user.id]">
+            <p
+              class="text-lg capitalize transition-all duration-200 hover:cursor-pointer hover:text-violet-400"
+            >
+              {{ user.attributes.name }}
+            </p>
+          </a>
+
+          <p class="text-slate-400">@{{ user.attributes.username }}</p>
+        </div>
+        <p-button
+          [loading]="loading"
+          styleClass=" bg-violet-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
+          label="Follow"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</p-scrollPanel>

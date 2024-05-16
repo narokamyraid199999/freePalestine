@@ -1,0 +1,37 @@
+<!-- top related container -->
+<div class="pt-12 container px-7">
+  <p class="permanent-marker-regular mb-12 text-2xl">top creators</p>
+  <div *ngIf="loading" class="grid grid-cols-2 gap-x-8 gap-y-10">
+    <p-skeleton
+      *ngFor="let elm of [1, 2, 3, 4, 5, 6]"
+      height="10rem"
+    ></p-skeleton>
+  </div>
+  <div *ngIf="!loading" class="grid grid-cols-2 gap-8">
+    <div
+      class="shadow-2xl py-8 flex flex-col gap-y-2 items-center justify-center border-x-2 border-y-2 border-gray-900"
+      *ngFor="let user of users"
+    >
+      <div *ngIf="user.attributes.image">
+        <img class="w-8" [src]="user.attributes.image" alt="" />
+      </div>
+      <div *ngIf="!user.attributes.image">
+        <img
+          class="w-8"
+          src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+          alt=""
+        />
+      </div>
+
+      <div class="flex flex-col items-center justify-center my-2">
+        <p>{{ user.attributes.name }}</p>
+        <p class="text-slate-400">@{{ user.attributes.username }}</p>
+      </div>
+      <p-button
+        [loading]="loading"
+        styleClass=" bg-violet-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
+        label="Follow"
+      ></p-button>
+    </div>
+  </div>
+</div>

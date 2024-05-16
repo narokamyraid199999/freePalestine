@@ -1,0 +1,36 @@
+<p-scrollPanel class="relative" [style]="{ width: '100%', height: '100vh' }">
+  <div class="container mx-auto px-28 py-20">
+    <div *ngIf="allPosts.length == 0 && !loading">
+      <div class="flex items-center gap-x-3">
+        <p class="text-center py-12 merriweather-regular text-4xl">No Post</p>
+        <i class="fa-regular text-4xl fa-face-sad-tear"></i>
+      </div>
+      <a routerLink="/main/createPost">
+        <p-button
+          icon="fa-regular fa-thumbs-up"
+          styleClass="w-[30rem] bg-violet-500 border-violet-500 mt-2 merriweather-regular"
+          label="new post"
+        ></p-button>
+      </a>
+    </div>
+
+    <!-- cart grid -->
+    <div
+      *ngIf="loading"
+      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12"
+    >
+      <div *ngFor="let elm of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <p-skeleton height="10rem"></p-skeleton>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10"
+    >
+      <app-explore-card
+        (likeEvent)="refreshPage($event)"
+        [post]="elm"
+        *ngFor="let elm of allPosts.reverse()"
+      ></app-explore-card>
+    </div>
+  </div>
+</p-scrollPanel>

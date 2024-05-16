@@ -1,0 +1,103 @@
+<div class="container text-white mx-auto">
+  <div class="flex flex-col items-center justify-center w-full h-screen">
+    <!-- welcomelogin -->
+    <h2
+      class="text-4xl flex items-center gap-x-2 font-medium mb-12 permanent-marker-regular"
+    >
+      <img
+        class="w-8 select-none"
+        src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+        alt=""
+      /><span class="">FreePalestine</span>
+    </h2>
+    <p class="text-3xl font-bold mb-3 merriweather-regular">
+      Log in to your account
+    </p>
+    <p class="text-md text-gray-400">welcome back! please enter details.</p>
+    <form class="my-6" [formGroup]="loginForm">
+      <!-- email part -->
+      <div>
+        <p class="mb-2 merriweather-regular">
+          Email<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="email"
+          formControlName="email"
+          type="email"
+        />
+        <div
+          class="p-2"
+          *ngIf="
+            loginForm.get('email')?.errors && loginForm.get('email')?.touched
+          "
+        >
+          <p
+            *ngIf="loginForm.get('email')?.getError('required')"
+            class="capitalize block p-error"
+          >
+            * email is required!
+          </p>
+          <p
+            *ngIf="loginForm.get('email')?.getError('email')"
+            class="capitalize p-error"
+          >
+            * enter valid email address
+          </p>
+        </div>
+      </div>
+
+      <!-- password part -->
+      <div class="mt-6">
+        <p class="mb-2 merriweather-regular">
+          Password<span class="text-red-400"> *</span>
+        </p>
+        <input
+          pInputText
+          class="w-[30rem] bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+          id="password"
+          formControlName="password"
+          type="password"
+        />
+        <div
+          class="p-2"
+          *ngIf="
+            loginForm.get('password')?.errors &&
+            loginForm.get('password')?.touched
+          "
+        >
+          <p
+            *ngIf="loginForm.get('password')?.getError('required')"
+            class="capitalize p-error"
+          >
+            * password is required!
+          </p>
+          <p
+            *ngIf="loginForm.get('password')?.getError('minlength')"
+            class="capitalize p-error"
+          >
+            * minimum length 8 char
+          </p>
+          <p
+            *ngIf="loginForm.get('password')?.getError('maxlength')"
+            class="capitalize p-error"
+          >
+            * maximum length 8 char
+          </p>
+        </div>
+      </div>
+
+      <p-button
+        (onClick)="login()"
+        [loading]="loading"
+        styleClass="w-[30rem] bg-violet-500 border-violet-500 mt-6 merriweather-regular"
+        label="Login"
+      ></p-button>
+      <p class="text-center mt-6 font-light text-lg">
+        Don't have an account?
+        <a routerLink="/auth/signup" class="text-violet-500">Sign Up</a>
+      </p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,165 @@
+<!-- main components -->
+<section>
+  <!-- main root -->
+  <div class="grid gap-x-8 grid-cols-6">
+    <!-- side nav section -->
+    <div
+      class="col-span-1 w-full pt-8 mainBackground h-screen flex flex-col justify-between px-6"
+    >
+      <!-- menui -->
+      <div>
+        <!-- logo -->
+
+        <h2
+          class="text-2xl flex items-center gap-x-2 font-medium permanent-marker-regular"
+        >
+          <img
+            class="w-8 select-none"
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          /><span class="">FreePalestine</span>
+        </h2>
+
+        <!-- profile -->
+        <div class="flex my-12 items-center gap-x-3">
+          <!-- profile pic -->
+          <div class="w-14">
+            <a
+              class="hover:text-violet-400 transition-all duration-200"
+              title="My Profile"
+              routerLink="/user"
+            >
+              <img
+                src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+                alt=""
+              />
+            </a>
+          </div>
+          <!-- profile info -->
+
+          <div>
+            <a
+              class="hover:text-violet-400 transition-all duration-200"
+              title="My Profile"
+              routerLink="/main/profile/11"
+              ><h2 class="font-medium text-xl">Faizan</h2></a
+            >
+
+            <p class="text-slate-400">@fizan</p>
+          </div>
+        </div>
+
+        <!-- navigate menii -->
+        <div>
+          <!-- profile -->
+          <div>
+            <a
+              class="hover:bg-indigo-400 flex items-center gap-x-4 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+              routerLinkActive="bg-indigo-400 text-white"
+              [routerLink]="['/main/profile', userId]"
+            >
+              <i
+                class="text-2xl fa-regular link-icon fa-user text-indigo-400"
+              ></i>
+              <p>profile</p>
+            </a>
+          </div>
+
+          <!-- home -->
+          <div>
+            <a
+              class="hover:bg-indigo-400 flex items-center gap-x-4 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+              routerLinkActive="bg-indigo-400 text-white"
+              routerLink="home"
+            >
+              <i
+                class="fa-solid text-2xl link-icon text-indigo-400 fa-house"
+              ></i>
+              <p>home</p>
+            </a>
+          </div>
+
+          <!-- explore -->
+          <a routerLinkActive="bg-indigo-400 text-white" routerLink="explore">
+            <div
+              class="hover:bg-indigo-400 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+            >
+              <div class="flex items-center gap-x-4">
+                <i
+                  class="fa-solid text-2xl link-icon text-indigo-400 fa-earth-asia"
+                ></i>
+                <p>explore</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- People -->
+          <a routerLinkActive="bg-violet-400 text-white" routerLink="people">
+            <div
+              class="hover:bg-indigo-400 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+            >
+              <div class="flex items-center gap-x-4">
+                <i
+                  class="fa-solid text-2xl link-icon text-indigo-400 fa-user-group"
+                ></i>
+                <p>People</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- saved -->
+          <a routerLinkActive="bg-violet-400 text-white" routerLink="saved">
+            <div
+              class="hover:bg-indigo-400 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+            >
+              <div class="flex items-center gap-x-4">
+                <i
+                  class="fa-regular fa-bookmark text-2xl link-icon text-indigo-400"
+                ></i>
+                <p>saved</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- create post -->
+          <a
+            routerLinkActive="bg-violet-400 text-white"
+            routerLink="createPost"
+          >
+            <div
+              class="hover:bg-indigo-400 mb-6 link py-4 rounded-md px-4 text-lg capitalize font-medium hover:cursor-pointer transition-all duration-100"
+            >
+              <div class="flex items-center gap-x-4">
+                <i
+                  class="fa-regular fa-copy text-2xl link-icon text-indigo-400"
+                ></i>
+                <p>create post</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- sign out -->
+      <div class="w-full">
+        <a (click)="Logout()">
+          <div
+            class="hover:bg-indigo-400 mb-6 link py-4 rounded-md px-4 capitalize font-medium hover:cursor-pointer transition-all duration-100"
+          >
+            <div class="flex items-center gap-x-4">
+              <i
+                class="fa-solid fa-door-open text-xl link-icon text-indigo-400"
+              ></i>
+              <p>Logout</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- home feed -->
+    <div class="col-span-5">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

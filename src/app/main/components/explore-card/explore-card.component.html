@@ -1,0 +1,70 @@
+<!-- explore cart root -->
+<div class="relative h-[21rem] rounded-3xl">
+  <div class="relative h-full rounded-3xl">
+    <img
+      class="absolute w-full h-full rounded-3xl"
+      [src]="url + post?.attributes?.image"
+      alt=""
+    />
+
+    <!-- user info -->
+    <div
+      class="absolute background z-20 px-10 h-full w-full flex flex-col justify-end pb-4"
+    >
+      <!-- user flex root -->
+      <div
+        class="flex flex-col xl:flex-row gap-x-8 gap-y-4 items-center justify-between"
+      >
+        <!-- user image and name -->
+        <div class="flex gap-x-2 items-center">
+          <img
+            class="w-8"
+            *ngIf="post?.attributes?.username?.data?.attributes?.image"
+            [src]="post?.attributes?.username?.data?.attributes?.image"
+            alt=""
+          />
+          <img
+            class="w-8"
+            *ngIf="!post?.attributes?.username?.data?.attributes?.image"
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+          <a [routerLink]="['/main/postDetails', post?.id]">
+            <p
+              class="roboto-regular text-sm transition-all duration-200 hover:cursor-pointer hover:text-violet-400"
+            >
+              {{ post?.attributes?.username?.data?.attributes?.name }}
+            </p>
+          </a>
+        </div>
+        <div *ngIf="myPosts" class="flex items-center gap-x-3">
+          <a title="Update Post" (click)="navigateToPostEdit()">
+            <i
+              class="fa-solid transition-all duration-100 hover:cursor-pointer hover:text-violet-500 text-violet-300 text-xl fa-pen-to-square"
+            ></i>
+          </a>
+          <a title="Delete Post" (click)="delete()">
+            <i
+              class="fa-regular duration-100 hover:cursor-pointer hover:text-red-500 text-red-300 text-xl fa-trash-can"
+            ></i>
+          </a>
+        </div>
+        <!-- heart and saved -->
+        <div *ngIf="!myPosts" class="flex items-center gap-x-5">
+          <a class="heart" (click)="like()">
+            <div class="flex items-center gap-x-2">
+              <i class="fa-regular icon text-indigo-300 text-2xl fa-heart"></i>
+
+              <span *ngIf="!post?.attributes?.likes" class="text-white">0</span>
+              <span *ngIf="post?.attributes?.likes" class="text-white">{{
+                post?.attributes?.likes
+              }}</span>
+            </div>
+          </a>
+
+          <i class="fa-regular text-indigo-300 text-xl fa-bookmark"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

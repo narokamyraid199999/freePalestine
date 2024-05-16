@@ -1,0 +1,35 @@
+<div class="container mx-auto px-28 py-12">
+  <h2 class="permanent-marker-regular mb-10 text-3xl">Home Feed</h2>
+
+  <div *ngIf="allPosts.length == 0 && !loading">
+    <div class="flex items-center gap-x-3">
+      <p class="text-center py-12 merriweather-regular text-4xl">No Post</p>
+      <i class="fa-regular text-4xl fa-face-sad-tear"></i>
+    </div>
+    <a routerLink="/main/createPost">
+      <p-button
+        icon="fa-regular fa-thumbs-up"
+        styleClass="w-[30rem] bg-violet-500 border-violet-500 mt-2 merriweather-regular"
+        label="new post"
+      ></p-button>
+    </a>
+  </div>
+
+  <!-- cart grid -->
+  <div *ngIf="loading" class="flex flex-col gap-y-20">
+    <div *ngFor="let elm of [1, 2, 3, 4, 5, 6]">
+      <p-skeleton height="10rem"></p-skeleton>
+    </div>
+  </div>
+  <div class="flex flex-col gap-y-20">
+    <app-post-card
+      (postDeleted)="refreshPage($event)"
+      [post]="elm"
+      *ngFor="let elm of allPosts.reverse()"
+    ></app-post-card>
+  </div>
+</div>
+
+<p *ngIf="allPosts.length > 0" class="text-center py-12 merriweather-regular">
+  End of Posts
+</p>

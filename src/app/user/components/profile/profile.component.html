@@ -1,0 +1,125 @@
+<!-- create post section -->
+
+<p-toast></p-toast>
+<p-scrollPanel [style]="{ width: '100%', height: '100vh' }">
+  <section>
+    <!-- create post root -->
+    <div class="container mx-auto px-[10%] pt-10">
+      <!-- header -->
+      <div class="flex items-center gap-x-4">
+        <i class="fa-solid text-4xl fa-pen-to-square"></i>
+        <h2 class="permanent-marker-regular text-4xl">Edit Profile</h2>
+      </div>
+      <form class="mt-6" [formGroup]="regForm">
+        <!-- user image -->
+        <div class="my-14">
+          <img
+            *ngIf="user?.attributes?.image"
+            [src]="user?.attributes?.image"
+            alt=""
+          />
+          <img
+            class="w-36"
+            *ngIf="!user?.attributes?.image"
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+        </div>
+
+        <!-- name part -->
+        <div>
+          <p class="mb-3 merriweather-regular">
+            Name<span class="text-red-400"> *</span>
+          </p>
+          <input
+            pInputText
+            class="w-full bg-zinc-800 h-14 text-white rounded-md border-zinc-800"
+            id="name"
+            formControlName="name"
+            type="text"
+          />
+        </div>
+
+        <!-- username part -->
+        <div class="mt-10">
+          <p class="mb-3 merriweather-regular">
+            Username<span class="text-red-400"> *</span>
+          </p>
+          <input
+            pInputText
+            class="w-full bg-zinc-900 h-14 text-white rounded-md border-zinc-800"
+            id="Username"
+            formControlName="username"
+            type="text"
+          />
+        </div>
+
+        <!-- email part -->
+        <div class="mt-10">
+          <p class="mb-3 merriweather-regular">
+            Email<span class="text-red-400"> *</span>
+          </p>
+          <input
+            pInputText
+            class="w-full bg-zinc-900 h-14 text-white rounded-md border-zinc-800"
+            id="email"
+            formControlName="email"
+            type="email"
+          />
+        </div>
+
+        <div class="mt-10">
+          <p class="font-medium capitalize mb-3">Bio</p>
+          <textarea
+            class="bg-neutral-900 rounded-xl pl-5 border-neutral-900 border-x-2 border-y-2 w-full text-white"
+            formControlName="bio"
+            rows="5"
+            [autocapitalize]="false"
+            pInputTextarea
+          ></textarea>
+          <div
+            class="p-2"
+            *ngIf="regForm.get('bio')?.errors && regForm.get('bio')?.touched"
+          >
+            <p
+              *ngIf="regForm.get('bio')?.getError('required')"
+              class="capitalize p-error"
+            >
+              * bio is required!
+            </p>
+            <p
+              *ngIf="regForm.get('bio')?.getError('minlength')"
+              class="capitalize p-error"
+            >
+              * minimum length 5 char
+            </p>
+            <p
+              *ngIf="regForm.get('bio')?.getError('maxlength')"
+              class="capitalize p-error"
+            >
+              * maximum length 100 char
+            </p>
+          </div>
+        </div>
+        <!-- button part -->
+        <div class="flex justify-end mt-8 mb-20">
+          <div class="flex items-center gap-x-4">
+            <a routerLink="/main">
+              <p-button
+                styleClass="bg-neutral-800 h-14 px-6 text-white border-neutral-800 "
+                label="Cancel"
+              ></p-button>
+            </a>
+
+            <p-button
+              (onClick)="editProfile()"
+              [loading]="loading"
+              styleClass=" bg-violet-500 border-violet-500  merriweather-regular"
+              label="Update Profile"
+            ></p-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</p-scrollPanel>

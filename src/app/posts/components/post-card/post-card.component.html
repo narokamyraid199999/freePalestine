@@ -1,0 +1,81 @@
+<div class="p-8 rounded-3xl mainBackground">
+  <!-- post user section -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-x-3">
+      <!-- profile pic -->
+      <div class="w-12">
+        <a
+          class="hover:text-violet-400 transition-all duration-200"
+          title="My Profile"
+          routerLink="/main/profile"
+        >
+          <img
+            src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+        </a>
+      </div>
+      <!-- profile info -->
+
+      <div>
+        <a
+          class="hover:text-violet-400 hover:cursor-pointer transition-all duration-200"
+          title="My Profile"
+          (click)="goToProfile()"
+          ><h2 class="font-medium text-xl select-none">
+            {{ post?.attributes?.username?.data?.attributes?.name }}
+          </h2></a
+        >
+
+        <p class="text-slate-400 mt-1">
+          {{ post?.attributes?.createdAt | date : "short" }} .
+          {{ post?.attributes?.location }}
+        </p>
+      </div>
+    </div>
+
+    <!-- edit section -->
+    <div *ngIf="isMyProfile" class="flex items-center gap-x-3">
+      <a title="Update Post" (click)="navigateToPostEdit()">
+        <i
+          class="fa-solid transition-all duration-100 hover:cursor-pointer hover:text-violet-500 text-violet-300 text-xl fa-pen-to-square"
+        ></i>
+      </a>
+      <a title="Delete Post" (click)="delete()">
+        <i
+          class="fa-regular duration-100 hover:cursor-pointer hover:text-red-500 text-red-300 text-xl fa-trash-can"
+        ></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- content part -->
+  <div>
+    <a
+      class="hover:text-violet-400 hover:cursor-pointer transition-all duration-200"
+      (click)="goToPostDetails()"
+    >
+      <h2 class="font-medium text-lg mt-5 mb-1 roboto-regular">
+        {{ post?.attributes?.content }}
+      </h2>
+    </a>
+
+    <p class="text-slate-400 mt-2">
+      <span class="flex items-center gap-x-2">
+        <span *ngFor="let elm of post?.attributes?.tags?.split(',')"
+          >#{{ elm }}</span
+        >
+      </span>
+    </p>
+  </div>
+
+  <!-- image part -->
+  <div class="mt-6">
+    <img
+      loading="lazy"
+      class="rounded-2xl"
+      [src]="url + post?.attributes?.image"
+      alt=""
+    />
+  </div>
+</div>

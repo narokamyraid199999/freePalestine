@@ -1,0 +1,173 @@
+<!-- create post section -->
+
+<p-toast></p-toast>
+<p-scrollPanel [style]="{ width: '100%', height: '100vh' }">
+  <section>
+    <!-- create post root -->
+    <div class="container mx-auto px-[10%] pt-10">
+      <!-- header -->
+      <div class="flex items-center gap-x-4">
+        <i class="fa-solid text-4xl fa-pen-to-square"></i>
+        <h2 class="permanent-marker-regular text-4xl">Edit Post</h2>
+      </div>
+      <form [formGroup]="postForm">
+        <!-- caption -->
+        <div class="mt-14">
+          <p class="font-medium capitalize mb-3">caption</p>
+          <textarea
+            class="bg-neutral-900 rounded-xl pl-5 border-neutral-900 border-x-2 border-y-2 w-full text-white"
+            formControlName="content"
+            rows="5"
+            [autocapitalize]="false"
+            pInputTextarea
+          ></textarea>
+          <div
+            class="p-2"
+            *ngIf="
+              postForm.get('content')?.errors &&
+              postForm.get('content')?.touched
+            "
+          >
+            <p
+              *ngIf="postForm.get('content')?.getError('required')"
+              class="capitalize p-error"
+            >
+              * caption is required!
+            </p>
+            <p
+              *ngIf="postForm.get('content')?.getError('minlength')"
+              class="capitalize p-error"
+            >
+              * minimum length 5 char
+            </p>
+            <p
+              *ngIf="postForm.get('content')?.getError('maxlength')"
+              class="capitalize p-error"
+            >
+              * maximum length 100 char
+            </p>
+          </div>
+        </div>
+
+        <!-- add photo -->
+        <div class="mt-8">
+          <p class="font-medium capitalize mb-3">Add Photo</p>
+
+          <!-- upload file  -->
+          <div
+            class="bg-neutral-900 hover:cur relative flex flex-col items-center justify-center rounded-xl pl-5 border-neutral-900 border-x-2 border-y-2 w-full h-[25rem] text-white"
+          >
+            <!-- upload continaer -->
+            <div class="absolute flex gap-y-8 flex-col">
+              <div class="flex items-center gap-x-2">
+                <i class="fa-solid relative text-7xl fa-image"></i>
+                <i class="fa-solid absolute left-16 text-7xl fa-images"></i>
+              </div>
+
+              <input
+                (change)="onFileSelected($event)"
+                type="file"
+                value="Select from comput"
+              />
+            </div>
+          </div>
+
+          <!-- add location -->
+          <div class="mt-8">
+            <p class="font-medium capitalize mb-3">Add Location</p>
+            <input
+              formControlName="location"
+              pInputText
+              class="w-full h-14 text-white bg-neutral-900 border-neutral-900"
+              type="text"
+            />
+            <div
+              class="p-2"
+              *ngIf="
+                postForm.get('location')?.errors &&
+                postForm.get('location')?.touched
+              "
+            >
+              <p
+                *ngIf="postForm.get('location')?.getError('required')"
+                class="capitalize p-error"
+              >
+                * location is required!
+              </p>
+              <p
+                *ngIf="postForm.get('location')?.getError('minlength')"
+                class="capitalize p-error"
+              >
+                * minimum length 5 char
+              </p>
+              <p
+                *ngIf="postForm.get('location')?.getError('maxlength')"
+                class="capitalize p-error"
+              >
+                * maximum length 100 char
+              </p>
+            </div>
+          </div>
+
+          <!-- tag part -->
+          <div class="my-10">
+            <p class="font-medium capitalize mb-3">
+              Add Tags (Separated by comma",")
+            </p>
+            <input
+              formControlName="tags"
+              placeholder="Art, Electronics, Computer"
+              pInputText
+              class="w-full h-14 text-white bg-neutral-900 border-neutral-900"
+              type="text"
+            />
+            <div
+              class="p-2"
+              *ngIf="
+                postForm.get('tags')?.errors && postForm.get('tags')?.touched
+              "
+            >
+              <p
+                *ngIf="postForm.get('tags')?.getError('required')"
+                class="capitalize p-error"
+              >
+                * tags is required!
+              </p>
+              <p
+                *ngIf="postForm.get('tags')?.getError('minlength')"
+                class="capitalize p-error"
+              >
+                * minimum length 5 char
+              </p>
+              <p
+                *ngIf="postForm.get('tags')?.getError('maxlength')"
+                class="capitalize p-error"
+              >
+                * maximum length 100 char
+              </p>
+            </div>
+          </div>
+
+          <!-- button part -->
+          <div class="flex justify-end mt-4 mb-20">
+            <div class="flex items-center gap-x-4">
+              <a routerLink="/main">
+                <p-button
+                  styleClass="bg-neutral-800 h-14 px-6 text-white border-neutral-800 "
+                  label="Cancel"
+                ></p-button>
+              </a>
+
+              <p-button
+                (onClick)="createPost()"
+                [loading]="loading"
+                styleClass=" bg-violet-500 border-violet-500  merriweather-regular"
+                label="Edit Post"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</p-scrollPanel>

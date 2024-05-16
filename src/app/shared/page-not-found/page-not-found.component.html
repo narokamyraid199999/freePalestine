@@ -1,0 +1,57 @@
+<section class="h-screen w-full">
+  <!-- not found root -->
+  <div class="flex h-full w-full items-center justify-center">
+    <!-- open song dialog -->
+    <p-dialog
+      [draggable]="false"
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ width: '50vw', height: '70vh', 'background-color': 'balck' }"
+    >
+      <div class="h-full w-full">
+        <iframe
+          class="w-full h-full"
+          src="http://www.youtube.com/embed/WN-t8TILw6c?autoplay=1"
+          frameborder="0"
+          allow="autoplay"
+        ></iframe>
+      </div>
+    </p-dialog>
+
+    <!-- main container -->
+    <div class="flex gap-x-12 items-center justify-center">
+      <div class="relative">
+        <img
+          src="https://img.freepik.com/premium-photo/sad-little-palestinian-child-palestinian-flag-background-stop-war-concept-help-palestine_948175-1946.jpg"
+          alt=""
+        />
+        <a
+          title="open video"
+          class="hover:cursor-pointer"
+          (click)="showDialog()"
+        >
+          <img
+            class="w-44 absolute left-1/3 top-1/3 drop-shadow-lg"
+            src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-09-933_512.gif"
+            alt=""
+          />
+        </a>
+      </div>
+      <div class="flex flex-col items-center">
+        <h2 class="text-center merriweather-regular text-6xl">
+          Page Not Found!
+        </h2>
+        <p class="my-8 text-xl text-gray-300">
+          The page you are looking for cannot be found.
+        </p>
+        <a routerLink="/main"
+          ><p
+            class="text-center text-xl border-b-2 pb-2 transition-all duration-100 hover:text-orange-600 hover:border-orange-600"
+          >
+            Go Home
+          </p></a
+        >
+      </div>
+    </div>
+  </div>
+</section>
