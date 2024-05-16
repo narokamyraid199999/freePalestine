@@ -61,8 +61,16 @@
               }}</span>
             </div>
           </a>
-
-          <i class="fa-regular text-indigo-300 text-xl fa-bookmark"></i>
+          <a class="hover:cursor-pointer" (click)="savePost()">
+            <i
+              *ngIf="!isSaved"
+              class="fa-regular text-indigo-300 text-xl fa-bookmark"
+            ></i>
+            <i
+              *ngIf="isSaved"
+              class="fa-solid text-indigo-300 text-xl fa-bookmark"
+            ></i>
+          </a>
         </div>
       </div>
     </div>

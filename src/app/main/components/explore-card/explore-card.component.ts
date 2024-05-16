@@ -3,6 +3,9 @@ import { PostService } from 'src/app/shared/services/post.service';
 import { PostElm } from '../../core/interfaces/post-elm';
 import { baseUrl } from 'src/app/shared/services/autht.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.service';
+import { UserRes } from '../../core/interfaces/user-res';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-explore-card',
@@ -10,9 +13,35 @@ import { Router } from '@angular/router';
   styleUrls: ['./explore-card.component.css'],
 })
 export class ExploreCardComponent implements OnInit {
-  constructor(private _postService: PostService, private _Router: Router) {}
+  constructor(
+    private _postService: PostService,
+    private _Router: Router,
+    private _userService: UserService,
+    private _messageService: MessageService
+  ) {}
+
   ngOnInit(): void {
-    console.log(this.post);
+    this.getUserId();
+    this.getUserById();
+  }
+
+  getUserId() {
+    this.userId = parseInt(`${localStorage.getItem('token')}`);
+  }
+
+  getUserById() {
+    this.loading = true;
+    this._userService.getUserById(this.userId).subscribe({
+      next: (data) => {
+        this.user = data.data;
+        console.log('user data', this.user);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.log('user error', error);
+        this.loading = false;
+      },
+    });
   }
 
   @Input() post: PostElm | undefined;
@@ -22,6 +51,11 @@ export class ExploreCardComponent implements OnInit {
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   url: string = baseUrl;
+  isSaved: boolean = false;
+  userId: number = 0;
+  loading: boolean = false;
+  user: UserRes | undefined;
+  messages: Message[] | undefined;
 
   @Output()
   likeEvent: EventEmitter<string> = new EventEmitter();
@@ -38,6 +72,38 @@ export class ExploreCardComponent implements OnInit {
       console.log('likes updated', data);
       this.likeEvent.emit('likes');
     });
+  }
+
+  savePost() {
+    this.isSaved = !this.isSaved;
+    if (this.isSaved) {
+      this._userService.getUserById(this.userId).subscribe((elm: any) => {
+        console.log('elm', elm);
+        let info = {
+          data: {
+            savedPosts: [
+              ...elm.data.attributes.savedPosts.data.map((elm: any) => elm.id),
+              this.post?.id,
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.userId)
+          .subscribe((data) => {
+            console.log('update user info', data);
+            this.loading = false;
+
+            this._messageService.add({
+              severity: 'success',
+              detail: 'post created successfully',
+            });
+          });
+      });
+
+      setTimeout(() => {
+        this.messages = [];
+      }, 4000);
+    }
   }
 
   navigateToPostEdit() {

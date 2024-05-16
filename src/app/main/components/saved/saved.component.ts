@@ -33,7 +33,7 @@ export class SavedComponent implements OnInit {
     this._userService.getUserById(this.userId).subscribe({
       next: (data) => {
         this.user = data.data;
-        console.log('user data', this.user);
+        console.log('saved user data', this.user);
         this.allPosts = this.user?.attributes.savedPosts.data;
         this.loading = false;
       },
