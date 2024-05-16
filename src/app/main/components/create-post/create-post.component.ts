@@ -137,7 +137,7 @@ export class CreatePostComponent implements OnInit {
 
             setTimeout(() => {
               this.messages = [];
-              this._Router.navigate(['/main']);
+              // this._Router.navigate(['/main']);
             }, 4000);
           },
           error: (error) => {
