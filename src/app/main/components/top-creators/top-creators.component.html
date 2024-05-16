@@ -13,7 +13,7 @@
       *ngFor="let user of users"
     >
       <div *ngIf="user.attributes.image">
-        <img class="w-8" [src]="user.attributes.image" alt="" />
+        <img class="w-8" [src]="url + user.attributes.image" alt="" />
       </div>
       <div *ngIf="!user.attributes.image">
         <img

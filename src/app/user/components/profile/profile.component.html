@@ -27,7 +27,13 @@
         <div class="mb-12 mt-14 flex items-center gap-x-8">
           <img
             class="w-32 h-32 shadow-2xl drop-shadow-lg rounded-full"
-            *ngIf="user?.attributes?.image"
+            *ngIf="imageUrl"
+            [src]="url + imageUrl"
+            alt=""
+          />
+          <img
+            class="w-32 h-32 shadow-2xl drop-shadow-lg rounded-full"
+            *ngIf="user?.attributes?.image && !imageUrl"
             [src]="url + user?.attributes?.image"
             alt=""
           />
@@ -39,6 +45,7 @@
           />
           <div>
             <p-fileUpload
+              styleClass="bg-black border-zinc-500"
               mode="basic"
               chooseLabel="Change Profile Photo"
               chooseIcon="pi pi-upload"
@@ -46,15 +53,24 @@
               [auto]="true"
               url="https://www.primefaces.org/cdn/api/upload.php"
               accept="image/*"
-              [maxFileSize]="1000000"
+              [maxFileSize]="100000000"
               (onUpload)="onFileSelected($event)"
-            />
+            >
+            </p-fileUpload>
 
             <!-- <input
               (change)="onFileSelected($event)"
               type="file"
               value="Select from comput"
             /> -->
+          </div>
+          <div *ngIf="loading">
+            <p-progressSpinner
+              styleClass="w-4rem h-4rem text-zinc-800"
+              strokeWidth="8"
+              fill="var(--surface-ground)"
+              animationDuration=".5s"
+            />
           </div>
         </div>
 

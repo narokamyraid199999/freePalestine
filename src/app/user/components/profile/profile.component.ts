@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -21,10 +21,12 @@ import { UserRes } from 'src/app/main/core/interfaces/user-res';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { baseUrl } from 'src/app/shared/services/autht.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -36,6 +38,7 @@ import { baseUrl } from 'src/app/shared/services/autht.service';
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
+    ProgressSpinnerModule,
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
@@ -87,6 +90,7 @@ export class EditProfileComponent implements OnInit {
 
   imageUploaded: uploadRes | undefined;
   imageUrl: string = '';
+  uploadedFiles: any[] = [];
 
   postid: number | undefined;
   userId: number | undefined;
@@ -94,6 +98,7 @@ export class EditProfileComponent implements OnInit {
   url: string = baseUrl;
 
   onFileSelected(event: any): void {
+    this.loading = true;
     this.uploadedImage = event.files[0];
     console.log(this.uploadedImage);
     this._userService.upload(this.uploadedImage).subscribe({
@@ -101,6 +106,12 @@ export class EditProfileComponent implements OnInit {
         this.imageUploaded = data;
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
+        this.loading = false;
+        this._messageService.add({
+          severity: 'info',
+          summary: 'File Uploaded',
+          detail: 'File has been uploaded successfully',
+        });
       },
       error: (error) => {
         console.log('error uploading', error);

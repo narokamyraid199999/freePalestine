@@ -23,6 +23,10 @@ export class ProfileComponent implements OnInit {
       this.userId = parseInt(`${data.get('id')}`);
       this._userService.userId.next(this.userId);
       if (this.userId) {
+        this.logedUserId = parseInt(`${localStorage.getItem('token')}`);
+        this.logedUserId == this.userId
+          ? (this.isMyProfile = true)
+          : (this.isMyProfile = false);
         this.getUserById();
       }
     });
@@ -36,6 +40,8 @@ export class ProfileComponent implements OnInit {
   followingCount: number = 0;
   url: string = baseUrl;
   user: UserRes | undefined;
+  logedUserId: number = 0;
+  isMyProfile: boolean = false;
 
   getUserById() {
     this._userService.getUserById(this.userId).subscribe({

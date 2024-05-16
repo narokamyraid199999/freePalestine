@@ -72,7 +72,7 @@
       </div>
 
       <!-- edit button -->
-      <div>
+      <div *ngIf="isMyProfile">
         <a [routerLink]="['/main/editProfile', user?.id]">
           <p-button
             icon="fa-solid fa-pen-to-square"

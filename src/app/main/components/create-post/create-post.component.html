@@ -59,15 +59,41 @@
           >
             <!-- upload continaer -->
             <div class="absolute flex gap-y-8 flex-col">
-              <div class="flex items-center gap-x-2">
+              <img
+                class="w-48 h-48"
+                *ngIf="imageUrl"
+                [src]="url + imageUrl"
+                alt=""
+              />
+
+              <div *ngIf="!imageUrl" class="flex items-center gap-x-2">
                 <i class="fa-solid relative text-7xl fa-image"></i>
                 <i class="fa-solid absolute left-16 text-7xl fa-images"></i>
               </div>
-
-              <input
+              <p-fileUpload
+                styleClass="bg-black border-black"
+                mode="basic"
+                chooseLabel="Upload Image"
+                chooseIcon="pi pi-upload"
+                name="demo[]"
+                [auto]="true"
+                url="https://www.primefaces.org/cdn/api/upload.php"
+                accept="image/*"
+                (onUpload)="onFileSelected($event)"
+              />
+              <!-- <input
                 (change)="onFileSelected($event)"
                 type="file"
                 value="Select from comput"
+              /> -->
+            </div>
+
+            <div class="relative top-36" *ngIf="loading">
+              <p-progressSpinner
+                styleClass="w-4rem h-4rem text-zinc-800"
+                strokeWidth="8"
+                fill="var(--surface-ground)"
+                animationDuration=".5s"
               />
             </div>
           </div>

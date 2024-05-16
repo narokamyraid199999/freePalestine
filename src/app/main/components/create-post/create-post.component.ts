@@ -6,6 +6,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { UserRes } from '../../core/interfaces/user-res';
 import { Router } from '@angular/router';
+import { baseUrl } from 'src/app/shared/services/autht.service';
 
 @Component({
   selector: 'app-create-post',
@@ -55,18 +56,25 @@ export class CreatePostComponent implements OnInit {
 
   imageUploaded: uploadRes | undefined;
   imageUrl: string = '';
-
+  url: string = baseUrl;
   postid: number | undefined;
   userId: number | undefined;
 
   onFileSelected(event: any): void {
-    this.uploadedImage = event.target.files[0];
+    this.loading = true;
+    this.uploadedImage = event.files[0];
     console.log(this.uploadedImage);
     this._userService.upload(this.uploadedImage).subscribe({
       next: (data: uploadRes) => {
         this.imageUploaded = data;
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
+        this.loading = false;
+        // this._messageService.add({
+        //   severity: 'info',
+        //   summary: 'File Uploaded',
+        //   detail: 'File has been uploaded successfully',
+        // });
       },
       error: (error) => {
         console.log('error uploading', error);

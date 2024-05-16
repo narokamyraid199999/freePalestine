@@ -30,6 +30,7 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyPostsComponent } from './components/profile/components/my-posts/my-posts.component';
 import { MySavedPostsComponent } from './components/profile/components/my-saved-posts/my-saved-posts.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { MySavedPostsComponent } from './components/profile/components/my-saved-
     ProgressBarModule,
     InputTextareaModule,
     FileUploadModule,
+    ProgressSpinnerModule,
     InputTextModule,
     ButtonModule,
     PostCardComponent,
