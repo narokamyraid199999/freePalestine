@@ -3,14 +3,21 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-x-3">
       <!-- profile pic -->
-      <div class="w-12">
+      <div>
         <a
           class="hover:text-violet-400 transition-all duration-200"
           title="My Profile"
           routerLink="/main/profile"
         >
           <img
+            *ngIf="!user?.attributes?.image"
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+            alt=""
+          />
+          <img
+            class="w-16 h-16 rounded-full"
+            *ngIf="user?.attributes?.image"
+            [src]="url + user?.attributes?.image"
             alt=""
           />
         </a>

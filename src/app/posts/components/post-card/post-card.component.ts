@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { Observable } from 'rxjs';
-import { postData, PostElm } from 'src/app/main/core/interfaces/post-elm';
+import { PostElm } from 'src/app/main/core/interfaces/post-elm';
 import { baseUrl } from 'src/app/shared/services/autht.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { EventEmitter } from '@angular/core';
+import { UserRes } from 'src/app/main/core/interfaces/user-res';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-post-card',
@@ -24,7 +25,11 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./post-card.component.css'],
 })
 export class PostCardComponent implements OnInit {
-  constructor(private _Router: Router, private _postService: PostService) {}
+  constructor(
+    private _Router: Router,
+    private _postService: PostService,
+    private _userService: UserService
+  ) {}
   ngOnInit(): void {
     this.getUserId();
     console.log(this.post);
@@ -35,12 +40,14 @@ export class PostCardComponent implements OnInit {
     this.userId == parseInt(`${localStorage.getItem('token')}`)
       ? (this.isMyProfile = true)
       : (this.isMyProfile = false);
+    this.getUserById();
   }
 
   @Input() post: PostElm | undefined;
   userId: number | undefined = 0;
   isMyProfile: boolean = false;
   url: string = baseUrl;
+  user: UserRes | undefined;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
@@ -55,6 +62,18 @@ export class PostCardComponent implements OnInit {
 
   navigateToPostEdit() {
     this._Router.navigate(['main/editPost', this.post?.id]);
+  }
+
+  getUserById() {
+    this._userService.getUserById(this.userId).subscribe({
+      next: (data) => {
+        this.user = data.data;
+        console.log('user data from edit profile', this.user);
+      },
+      error: (error) => {
+        console.log('user error', error);
+      },
+    });
   }
 
   goToPostDetails() {
