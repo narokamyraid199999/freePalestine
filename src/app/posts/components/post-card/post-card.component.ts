@@ -37,13 +37,15 @@ export class PostCardComponent implements OnInit {
 
   getUserId() {
     this.userId = this.post?.attributes.username.data.id;
-    this.userId == parseInt(`${localStorage.getItem('token')}`)
+    this.loginUserId = parseInt(`${localStorage.getItem('token')}`);
+    this.userId == this.loginUserId
       ? (this.isMyProfile = true)
       : (this.isMyProfile = false);
     this.getUserById();
   }
 
   @Input() post: PostElm | undefined;
+  loginUserId: number = 0;
   userId: number | undefined = 0;
   isMyProfile: boolean = false;
   url: string = baseUrl;
@@ -75,6 +77,40 @@ export class PostCardComponent implements OnInit {
 
   savePost() {
     this.isSaved = !this.isSaved;
+    if (this.isSaved) {
+      this._userService.getUserById(this.loginUserId).subscribe((elm: any) => {
+        let info = {
+          data: {
+            savedPosts: [
+              ...elm.data.attributes.savedPosts.data.map((elm: any) => elm.id),
+              this.post?.id,
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.loginUserId)
+          .subscribe((data) => {
+            console.log('data updated', data);
+          });
+      });
+    } else {
+      this._userService.getUserById(this.loginUserId).subscribe((elm: any) => {
+        let info = {
+          data: {
+            savedPosts: [
+              ...elm.data.attributes.savedPosts.data.filter(
+                (elm: any) => elm.id != this.post?.id
+              ),
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.loginUserId)
+          .subscribe((data) => {
+            console.log('data updated', data);
+          });
+      });
+    }
   }
 
   like() {}
