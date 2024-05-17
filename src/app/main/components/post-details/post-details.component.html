@@ -1,10 +1,132 @@
-<!-- post details section -->
-<div class="pt-12 container px-[8%] py-[10rem]">
-  <a
-    class="flex hover:cursor-pointer hover:text-indigo-400 transition-all duration-200 items-center gap-x-4"
-    (click)="GoBack()"
-  >
-    <i class="fa-regular text-3xl fa-hand-point-left"></i>
-    <p class="text-2xl">Back</p>
-  </a>
-</div>
+<p-scrollPanel class="relative" [style]="{ width: '100%', height: '100vh' }">
+  <!-- skeleton component -->
+  <!-- cart grid -->
+  <div *ngIf="loading" class="pt-12 container px-[8%]">
+    <p-skeleton width="7rem" height="3rem"></p-skeleton>
+    <div class="mt-14">
+      <p-skeleton height="15rem"></p-skeleton>
+    </div>
+  </div>
+  <!-- post details section -->
+  <div *ngIf="!loading" class="pt-12 container px-[8%] py-[10rem]">
+    <!-- back button -->
+    <a
+      class="flex hover:cursor-pointer hover:text-indigo-400 transition-all duration-200 items-center gap-x-4"
+      (click)="GoBack()"
+    >
+      <i class="fa-regular text-3xl fa-hand-point-left"></i>
+      <p class="text-2xl">Back</p>
+    </a>
+
+    <!-- post details part -->
+    <div class="p-8 mt-14 rounded-3xl mainBackground">
+      <div class="grid grid-cols-5 gap-x-14">
+        <!-- iamge part -->
+        <div class="col-span-3">
+          <img [src]="url + post?.attributes?.image" alt="" />
+        </div>
+
+        <!-- user info part -->
+        <div class="col-span-2 flex flex-col justify-between">
+          <!-- header part -->
+          <div>
+            <div
+              class="flex items-center gap-x-3 border-b-2 border-zinc-800 pb-8"
+            >
+              <!-- profile pic -->
+              <div>
+                <a
+                  class="hover:text-violet-400 transition-all duration-200"
+                  title="My Profile"
+                >
+                  <img
+                    *ngIf="!post?.attributes?.username?.data?.attributes?.image"
+                    src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+                    alt=""
+                  />
+                  <img
+                    class="w-16 h-16 rounded-full"
+                    *ngIf="post?.attributes?.username?.data?.attributes?.image"
+                    [src]="
+                      url + post?.attributes?.username?.data?.attributes?.image
+                    "
+                    alt=""
+                  />
+                </a>
+              </div>
+              <!-- profile info -->
+
+              <div>
+                <a
+                  class="hover:text-violet-400 hover:cursor-pointer transition-all duration-200"
+                  title="My Profile"
+                  (click)="goToProfile()"
+                  ><h2 class="font-medium text-xl select-none">
+                    {{ post?.attributes?.username?.data?.attributes?.name }}
+                  </h2></a
+                >
+
+                <p class="text-slate-400 mt-1">
+                  {{ post?.attributes?.createdAt | date : "short" }} .
+                  {{ post?.attributes?.location }}
+                </p>
+              </div>
+            </div>
+
+            <!-- post content -->
+            <div class="mt-8">
+              <h2 class="capitalize font-medium text-xl merriweather-regular">
+                {{ post?.attributes?.content }}
+              </h2>
+              <p class="text-slate-400 mt-2">
+                <span class="flex items-center gap-x-2">
+                  <span *ngFor="let elm of post?.attributes?.tags?.split(',')"
+                    >#{{ elm }}</span
+                  >
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- like and save part -->
+          <div>
+            <!-- heart and saved -->
+            <div class="flex justify-between items-center gap-x-5">
+              <a class="heart" (click)="like()">
+                <div class="flex items-center gap-x-2">
+                  <i
+                    class="fa-regular icon text-indigo-300 text-2xl fa-heart"
+                  ></i>
+
+                  <span *ngIf="!post?.attributes?.likes" class="text-white"
+                    >0</span
+                  >
+                  <span *ngIf="post?.attributes?.likes" class="text-white">{{
+                    post?.attributes?.likes
+                  }}</span>
+                </div>
+              </a>
+              <a class="hover:cursor-pointer" (click)="savePost()">
+                <i
+                  *ngIf="!isSaved"
+                  class="fa-regular text-indigo-300 text-xl fa-bookmark"
+                ></i>
+                <i
+                  *ngIf="isSaved"
+                  class="fa-solid text-indigo-300 text-xl fa-bookmark"
+                ></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- most related posts -->
+    <div class="mt-16 border-t-2 border-zinc-900 pt-20">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, autem.
+      </p>
+    </div>
+  </div>
+</p-scrollPanel>

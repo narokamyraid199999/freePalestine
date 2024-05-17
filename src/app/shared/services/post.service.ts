@@ -15,6 +15,10 @@ export class PostService {
     );
   }
 
+  getPostById(id: number): Observable<any> {
+    return this._Httpclient.get(`${baseUrl}/api/posts/${id}?populate=*`);
+  }
+
   createPost(postData: any): Observable<any> {
     return this._Httpclient.post(`${baseUrl}/api/posts`, postData);
   }
