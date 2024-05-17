@@ -36,8 +36,8 @@ export class MyPostsComponent implements OnInit {
     });
   }
 
-  getUserById() {
-    this.loading = true;
+  getUserById(loading: boolean = true) {
+    this.loading = loading;
     this._userService.getUserById(this.userId).subscribe({
       next: (data) => {
         this.user = data.data;
@@ -62,7 +62,7 @@ export class MyPostsComponent implements OnInit {
     setTimeout(() => {
       this.messages = [];
     }, 7000);
-    this.getUserById();
+    this.getUserById(false);
   }
 
   user: UserRes | undefined;

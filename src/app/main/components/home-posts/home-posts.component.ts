@@ -18,8 +18,8 @@ export class HomePostsComponent implements OnInit {
     this.getAllPosts();
   }
 
-  getAllPosts(): void {
-    this.loading = true;
+  getAllPosts(loading: boolean = true): void {
+    this.loading = loading;
     this._postService.getAllPosts().subscribe({
       next: (data) => {
         this.allPosts = data.data;
@@ -42,7 +42,7 @@ export class HomePostsComponent implements OnInit {
     setTimeout(() => {
       this.messages = [];
     }, 7000);
-    this.getAllPosts();
+    this.getAllPosts(false);
   }
 
   allPosts: PostElm[] = [];

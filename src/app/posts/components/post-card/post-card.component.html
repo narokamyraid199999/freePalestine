@@ -10,11 +10,13 @@
           routerLink="/main/profile"
         >
           <img
+            loading="lazy"
             *ngIf="!user?.attributes?.image"
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
             alt=""
           />
           <img
+            loading="lazy"
             class="w-16 h-16 rounded-full"
             *ngIf="user?.attributes?.image"
             [src]="url + user?.attributes?.image"
