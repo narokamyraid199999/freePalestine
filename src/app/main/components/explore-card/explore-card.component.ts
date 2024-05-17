@@ -79,6 +79,9 @@ export class ExploreCardComponent implements OnInit {
   @Output()
   likeEvent: EventEmitter<string> = new EventEmitter();
 
+  @Output()
+  deleteEvent: EventEmitter<string> = new EventEmitter();
+
   like() {
     let data = {
       data: {
@@ -130,14 +133,39 @@ export class ExploreCardComponent implements OnInit {
   }
 
   delete() {
-    this._postService.deletePost(this.post?.id).subscribe({
-      next: (data) => {
-        console.log('delete post', data);
-        this.postDeleted.emit('games');
-      },
-      error: (error) => {
-        console.log('fail to delete post', error);
-      },
-    });
+    if (this.fromSaved) {
+      this._userService.getUserById(this.userId).subscribe((elm: any) => {
+        console.log('elm', elm);
+        let info = {
+          data: {
+            savedPosts: [
+              ...elm.data.attributes.savedPosts.data.filter(
+                (elm: any) => elm.id != this.post?.id
+              ),
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.userId)
+          .subscribe((data) => {
+            this.loading = false;
+            this.deleteEvent.emit('deleted');
+          });
+      });
+
+      setTimeout(() => {
+        this.messages = [];
+      }, 4000);
+    } else {
+      this._postService.deletePost(this.post?.id).subscribe({
+        next: (data) => {
+          console.log('delete post', data);
+          this.postDeleted.emit('games');
+        },
+        error: (error) => {
+          console.log('fail to delete post', error);
+        },
+      });
+    }
   }
 }

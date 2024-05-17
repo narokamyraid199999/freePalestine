@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-scrollPanel class="relative" [style]="{ width: '100%', height: '100vh' }">
   <section>
     <div class="pt-12 container px-[8%] py-[10rem]">
@@ -30,6 +31,7 @@
       >
         <app-explore-card
           (likeEvent)="refreshPage($event)"
+          (deleteEvent)="deletePost($event)"
           [myPosts]="true"
           [fromSaved]="fromSaved"
           [post]="elm"

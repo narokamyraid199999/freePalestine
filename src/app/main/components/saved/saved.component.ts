@@ -59,6 +59,18 @@ export class SavedComponent implements OnInit {
   //   });
   // }
 
+  deletePost(event: any) {
+    this._messageService.add({
+      severity: 'info',
+      detail: 'Removed from saved posts',
+    });
+
+    setTimeout(() => {
+      this.messages = [];
+    }, 7000);
+    this.getUserById();
+  }
+
   refreshPage(event: any) {
     this._messageService.add({
       severity: 'info',
