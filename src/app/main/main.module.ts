@@ -31,6 +31,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MyPostsComponent } from './components/profile/components/my-posts/my-posts.component';
 import { MySavedPostsComponent } from './components/profile/components/my-saved-posts/my-saved-posts.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FilterPipe } from './core/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ProfileComponent,
     MyPostsComponent,
     MySavedPostsComponent,
+    FilterPipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

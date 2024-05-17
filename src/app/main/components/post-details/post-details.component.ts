@@ -20,12 +20,12 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
-    this.getPostById();
   }
 
   getUserId() {
     this._activateRouter.paramMap.subscribe((data) => {
       this.postId = parseInt(`${data.get('id')}`);
+      this.getPostById();
     });
   }
 
@@ -36,9 +36,38 @@ export class PostDetailsComponent implements OnInit {
         this.post = data.data;
         console.log('post info', this.post);
         this.loading = false;
+        this.getRelatedPosts();
       },
       error: (error) => {
         console.log('faild to get post info', error);
+        this.loading = false;
+      },
+    });
+  }
+
+  getRelatedPosts() {
+    let tempPost: PostElm[] = [];
+    this._postService.getAllPosts().subscribe({
+      next: (data) => {
+        this.relatedPosts = data.data;
+        console.log('related posts info', this.relatedPosts);
+        let elm = this.post?.attributes.tags.split(',').forEach((word) => {
+          if (
+            this.relatedPosts.filter((post) =>
+              post.attributes.tags.includes(word)
+            )
+          ) {
+            tempPost = [
+              ...this.relatedPosts.filter((post) =>
+                post.attributes.tags.includes(word)
+              ),
+            ];
+          }
+        });
+        this.relatedPosts = tempPost;
+      },
+      error: (error) => {
+        console.log('faild to get related posts', error);
         this.loading = false;
       },
     });
@@ -55,12 +84,15 @@ export class PostDetailsComponent implements OnInit {
     ]);
   }
 
+  refreshPage(event: any) {}
   like() {}
 
   savePost() {}
 
   postId: number = 0;
   post: PostElm | undefined;
+  relatedPosts: PostElm[] = [];
+
   loading: boolean = false;
   url: string = baseUrl;
   isSaved: boolean = false;
