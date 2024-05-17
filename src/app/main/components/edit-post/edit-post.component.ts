@@ -117,7 +117,7 @@ export class EditPostComponent implements OnInit {
       let data = {
         data: {
           ...this.postForm.value,
-          image: this.imageUrl,
+          image: this.imageUrl ? this.imageUrl : this.post?.attributes.image,
           username: this.userId,
         },
       };
