@@ -5,6 +5,7 @@ import { Message, MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserRes } from '../../core/interfaces/user-res';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-saved',
@@ -16,7 +17,8 @@ export class SavedComponent implements OnInit {
     private _postService: PostService,
     private _messageService: MessageService,
     private _activateRouter: ActivatedRoute,
-    private _userService: UserService
+    private _userService: UserService,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,10 @@ export class SavedComponent implements OnInit {
 
   getUserId() {
     this.userId = parseInt(`${localStorage.getItem('token')}`);
+  }
+
+  goBack() {
+    this._location.back();
   }
 
   getUserById(loading: boolean = true) {

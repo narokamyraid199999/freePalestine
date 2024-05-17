@@ -116,8 +116,8 @@ export class ExploreCardComponent implements OnInit {
             this.loading = false;
 
             this._messageService.add({
-              severity: 'success',
-              detail: 'post created successfully',
+              severity: 'info',
+              detail: 'Post has been saved',
             });
           });
       });
