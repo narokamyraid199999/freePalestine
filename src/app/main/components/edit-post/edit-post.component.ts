@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Message, MessageService } from 'primeng/api';
 import { uploadRes } from 'src/app/core/interfaces/uploadRes';
 import { UserService } from 'src/app/core/services/user.service';
 import { PostService } from 'src/app/shared/services/post.service';
+import { PostElm } from '../../core/interfaces/post-elm';
+import { baseUrl } from 'src/app/shared/services/autht.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-post',
@@ -14,15 +18,43 @@ export class EditPostComponent implements OnInit {
   constructor(
     private _messageService: MessageService,
     private _userService: UserService,
-    private _postService: PostService
+    private _postService: PostService,
+    private _activateRouter: ActivatedRoute,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
-    this.getUserId();
+    this.getPostId();
   }
 
-  getUserId() {
-    this.userId = parseInt(`${localStorage.getItem('token')}`);
+  getPostId() {
+    this._activateRouter.paramMap.subscribe((data) => {
+      this.postid = parseInt(`${data.get('id')}`);
+      this.getPostById();
+    });
+  }
+
+  goBack() {
+    this._location.back();
+  }
+
+  getPostById() {
+    this.loading = true;
+    this._postService.getPostById(this.postid).subscribe({
+      next: (data) => {
+        this.post = data.data;
+        console.log('from edit post data', this.post);
+        this.postForm.setValue({
+          content: this.post?.attributes.content,
+          location: this.post?.attributes.location,
+          tags: this.post?.attributes.tags,
+        });
+        this.loading = false;
+      },
+      error: (err) => {
+        console.log('failed to get post data', err);
+      },
+    });
   }
 
   postForm: FormGroup = new FormGroup({
@@ -44,26 +76,28 @@ export class EditPostComponent implements OnInit {
   });
 
   messages: Message[] | undefined;
-
+  post: PostElm | undefined;
   caption: string = '';
-
+  url: string = baseUrl;
   uploadedImage: any;
   loading: boolean = false;
 
   imageUploaded: uploadRes | undefined;
   imageUrl: string = '';
 
-  postid: number | undefined;
+  postid: number = 0;
   userId: number | undefined;
 
   onFileSelected(event: any): void {
-    this.uploadedImage = event.target.files[0];
+    this.loading = true;
+    this.uploadedImage = event.files[0];
     console.log(this.uploadedImage);
     this._userService.upload(this.uploadedImage).subscribe({
       next: (data: uploadRes) => {
         this.imageUploaded = data;
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
+        this.loading = false;
       },
       error: (error) => {
         console.log('error uploading', error);
@@ -88,7 +122,7 @@ export class EditPostComponent implements OnInit {
         },
       };
       setTimeout(() => {
-        this._postService.createPost(data).subscribe({
+        this._postService.updatePost(data, this.postid).subscribe({
           next: (data) => {
             console.log('post created', data);
             this.postid = data.data.id;
@@ -96,12 +130,6 @@ export class EditPostComponent implements OnInit {
             this._messageService.add({
               severity: 'success',
               detail: 'post created successfully',
-            });
-
-            this.postForm.setValue({
-              content: '',
-              tags: '',
-              location: '',
             });
 
             Object.values(this.postForm.controls).forEach((elm) =>
