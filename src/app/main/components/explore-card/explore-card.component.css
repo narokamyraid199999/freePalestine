@@ -9,7 +9,7 @@
 
 .show-eye {
   transform: translateY(5rem);
-  transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.3s;
   opacity: 0;
 }
 

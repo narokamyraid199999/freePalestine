@@ -1,4 +1,4 @@
-<div class="p-8 rounded-3xl mainBackground">
+<div class="p-8 rounded-md mainBackground border-b border-gray-700 mx-auto">
   <!-- post user section -->
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-x-3">
@@ -84,5 +84,30 @@
       [src]="url + post?.attributes?.image"
       alt=""
     />
+  </div>
+
+  <div class="flex mt-6 justify-between items-center gap-x-5">
+    <a class="heart" (click)="like()">
+      <div class="flex items-center gap-x-2">
+        <i
+          class="fa-regular icon hover:cursor-pointer hover:hover:text-indigo-200 text-indigo-300 text-2xl fa-heart"
+        ></i>
+
+        <span *ngIf="!post?.attributes?.likes" class="text-white">0</span>
+        <span *ngIf="post?.attributes?.likes" class="text-white">{{
+          post?.attributes?.likes
+        }}</span>
+      </div>
+    </a>
+    <a class="hover:cursor-pointer" (click)="savePost()">
+      <i
+        *ngIf="!isSaved"
+        class="fa-regular hover:text-indigo-200 text-indigo-300 text-xl fa-bookmark"
+      ></i>
+      <i
+        *ngIf="isSaved"
+        class="fa-solid hover:text-indigo-200 text-indigo-300 text-xl fa-bookmark"
+      ></i>
+    </a>
   </div>
 </div>

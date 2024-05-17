@@ -48,6 +48,7 @@ export class PostCardComponent implements OnInit {
   isMyProfile: boolean = false;
   url: string = baseUrl;
   user: UserRes | undefined;
+  isSaved: boolean = false;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
@@ -71,6 +72,12 @@ export class PostCardComponent implements OnInit {
       },
     });
   }
+
+  savePost() {
+    this.isSaved = !this.isSaved;
+  }
+
+  like() {}
 
   goToPostDetails() {
     this._Router.navigate(['main/postDetails', this.post?.id]);
