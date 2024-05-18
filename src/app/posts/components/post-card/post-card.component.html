@@ -10,8 +10,9 @@
           routerLink="/main/profile"
         >
           <img
+            class="w-8"
             loading="lazy"
-            *ngIf="!user?.attributes?.image"
+            *ngIf="!user?.attributes?.image && !loading"
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
             alt=""
           />
@@ -92,9 +93,13 @@
     <a class="heart" (click)="like()">
       <div class="flex items-center gap-x-2">
         <i
+          *ngIf="!isLiked"
           class="fa-regular icon hover:cursor-pointer hover:hover:text-indigo-200 text-indigo-300 text-2xl fa-heart"
         ></i>
-
+        <i
+          *ngIf="isLiked"
+          class="fa-solid icon hover:cursor-pointer hover:hover:text-red-500 text-red-400 text-2xl fa-heart"
+        ></i>
         <span *ngIf="!post?.attributes?.likes" class="text-white">0</span>
         <span *ngIf="post?.attributes?.likes" class="text-white">{{
           post?.attributes?.likes

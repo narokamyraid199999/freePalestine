@@ -44,13 +44,15 @@ export class PostCardComponent implements OnInit {
     this.getUserById();
   }
 
-  @Input() post: PostElm | undefined;
+  @Input() post: PostElm = {} as PostElm;
   loginUserId: number = 0;
   userId: number | undefined = 0;
   isMyProfile: boolean = false;
   url: string = baseUrl;
   user: UserRes | undefined;
   isSaved: boolean = false;
+  loading: boolean = false;
+  isLiked: boolean = false;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
@@ -64,13 +66,16 @@ export class PostCardComponent implements OnInit {
   }
 
   getUserById() {
+    this.loading = true;
     this._userService.getUserById(this.userId).subscribe({
       next: (data) => {
         this.user = data.data;
         console.log('user data from edit profile', this.user);
+        this.loading = false;
       },
       error: (error) => {
         console.log('user error', error);
+        this.loading = false;
       },
     });
   }
@@ -113,7 +118,47 @@ export class PostCardComponent implements OnInit {
     }
   }
 
-  like() {}
+  like() {
+    this.isLiked = !this.isLiked;
+    if (this.isLiked) {
+      this._userService.getUserById(this.loginUserId).subscribe((elm: any) => {
+        let info = {
+          data: {
+            likedPosts: [
+              ...elm.data.attributes.likedPosts.data.map((elm: any) => elm.id),
+              this.post?.id,
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.loginUserId)
+          .subscribe((data) => {
+            console.log('data updated', data);
+            this.post?.attributes.likes
+              ? (this.post.attributes.likes += 1)
+              : (this.post.attributes.likes = 1);
+          });
+      });
+    } else {
+      this._userService.getUserById(this.loginUserId).subscribe((elm: any) => {
+        let info = {
+          data: {
+            likedPosts: [
+              ...elm.data.attributes.likedPosts.data.filter(
+                (elm: any) => elm.id != this.post?.id
+              ),
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.loginUserId)
+          .subscribe((data) => {
+            console.log('data updated', data);
+            this.post.attributes.likes -= 1;
+          });
+      });
+    }
+  }
 
   goToPostDetails() {
     this._Router.navigate(['main/postDetails', this.post?.id]);

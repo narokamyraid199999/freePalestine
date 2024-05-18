@@ -13,6 +13,7 @@ import { EditProfileComponent } from '../user/components/profile/profile.compone
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyPostsComponent } from './components/profile/components/my-posts/my-posts.component';
 import { MySavedPostsComponent } from './components/profile/components/my-saved-posts/my-saved-posts.component';
+import { LikedPostsComponent } from '../user/components/profile/components/liked-posts/liked-posts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

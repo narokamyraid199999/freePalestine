@@ -17,12 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
-  declarations: [
-    UserComponent,
-    EditProfileComponent,
-    PostsComponent,
-    LikedPostsComponent,
-  ],
+  declarations: [UserComponent, EditProfileComponent, PostsComponent],
   providers: [MessageService, UserService, PostService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

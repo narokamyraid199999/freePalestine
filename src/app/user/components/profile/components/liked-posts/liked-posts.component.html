@@ -1,1 +1,34 @@
-<p>liked-posts works!</p>
+<p-toast></p-toast>
+<div class="container pb-28 pt-4 mx-auto">
+  <div *ngIf="allPosts.length == 0 && !loading">
+    <div class="flex items-center gap-x-3">
+      <p class="text-center py-12 merriweather-regular text-4xl">No Post</p>
+      <i class="fa-regular text-4xl fa-face-sad-tear"></i>
+    </div>
+    <a *ngIf="isMyProfile" routerLink="/main/createPost">
+      <p-button
+        icon="fa-regular fa-thumbs-up"
+        styleClass="w-[30rem] bg-violet-500 border-violet-500 mt-2 merriweather-regular"
+        label="new post"
+      ></p-button>
+    </a>
+  </div>
+
+  <!-- cart grid -->
+  <div
+    *ngIf="loading"
+    class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12"
+  >
+    <div *ngFor="let elm of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+      <p-skeleton height="10rem"></p-skeleton>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <app-explore-card
+      (postDeleted)="refreshPage($event)"
+      [post]="elm"
+      [myPosts]="isMyProfile"
+      *ngFor="let elm of allPosts.reverse()"
+    ></app-explore-card>
+  </div>
+</div>
