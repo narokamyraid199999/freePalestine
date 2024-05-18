@@ -67,6 +67,7 @@ export class MySavedPostsComponent implements OnInit {
 
   user: UserRes | undefined;
   isMyProfile: boolean = false;
+  isMyLiked: boolean = true;
   userId: number = 0;
   logedInUserId: number = 0;
   allPosts: PostElm[] = [];

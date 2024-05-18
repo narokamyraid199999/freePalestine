@@ -64,6 +64,7 @@ export class ExploreCardComponent implements OnInit {
   @Input() post: PostElm | undefined;
   @Input() myPosts: boolean = false;
   @Input() fromSaved: boolean = false;
+  @Input() isMyLiked: boolean = false;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
@@ -140,6 +141,29 @@ export class ExploreCardComponent implements OnInit {
           data: {
             savedPosts: [
               ...elm.data.attributes.savedPosts.data.filter(
+                (elm: any) => elm.id != this.post?.id
+              ),
+            ],
+          },
+        };
+        this._userService
+          .updateUserInfo(info, this.userId)
+          .subscribe((data) => {
+            this.loading = false;
+            this.deleteEvent.emit('deleted');
+          });
+      });
+
+      setTimeout(() => {
+        this.messages = [];
+      }, 4000);
+    } else if (this.isMyLiked) {
+      this._userService.getUserById(this.userId).subscribe((elm: any) => {
+        console.log('elm', elm);
+        let info = {
+          data: {
+            likedPosts: [
+              ...elm.data.attributes.likedPosts.data.filter(
                 (elm: any) => elm.id != this.post?.id
               ),
             ],

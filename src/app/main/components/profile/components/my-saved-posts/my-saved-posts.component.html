@@ -26,7 +26,9 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
     <app-explore-card
       (postDeleted)="refreshPage($event)"
+      (deleteEvent)="refreshPage($event)"
       [post]="elm"
+      [isMyLiked]="isMyLiked"
       [myPosts]="isMyProfile"
       *ngFor="let elm of allPosts.reverse()"
     ></app-explore-card>
