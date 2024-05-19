@@ -58,19 +58,39 @@
             class="bg-neutral-900 hover:cur relative flex flex-col items-center justify-center rounded-xl pl-5 border-neutral-900 border-x-2 border-y-2 w-full h-[25rem] text-white"
           >
             <!-- upload continaer -->
+            <div class="absolute top-0 right-0">
+              <p-fileUpload
+                *ngIf="isVideo"
+                styleClass="bg-black border-black "
+                mode="basic"
+                chooseLabel="Edit"
+                chooseIcon="fa-solid fa-pen-to-square"
+                name="demo[]"
+                [auto]="true"
+                url="https://www.primefaces.org/cdn/api/upload.php"
+                accept="video/*"
+                (onUpload)="onFileSelected($event)"
+              />
+            </div>
             <div class="absolute flex gap-y-8 flex-col">
               <img
                 class="w-48 h-48"
-                *ngIf="imageUrl"
+                *ngIf="imageUrl && !isVideo"
                 [src]="url + imageUrl"
                 alt=""
               />
+              <app-video-player
+                class="w-[25rem] xl:w-[35rem]"
+                *ngIf="isVideo && imageUrl"
+                [fromEdit]="true"
+              ></app-video-player>
 
               <div *ngIf="!imageUrl" class="flex items-center gap-x-2">
                 <i class="fa-solid relative text-7xl fa-image"></i>
                 <i class="fa-solid absolute left-16 text-7xl fa-images"></i>
               </div>
               <p-fileUpload
+                *ngIf="!isVideo"
                 styleClass="bg-black border-black"
                 mode="basic"
                 chooseLabel="Upload Image"

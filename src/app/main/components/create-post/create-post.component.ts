@@ -59,6 +59,7 @@ export class CreatePostComponent implements OnInit {
   url: string = baseUrl;
   postid: number | undefined;
   userId: number | undefined;
+  isVideo: boolean = false;
 
   onFileSelected(event: any): void {
     this.loading = true;
@@ -69,6 +70,12 @@ export class CreatePostComponent implements OnInit {
         this.imageUploaded = data;
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
+        this.imageUrl.includes('.mp4')
+          ? (this.isVideo = true)
+          : (this.isVideo = false);
+        if (this.isVideo) {
+          this._postService.videoUrl.next(`${this.url + this.imageUrl}`);
+        }
         this.loading = false;
         // this._messageService.add({
         //   severity: 'info',
