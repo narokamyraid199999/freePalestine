@@ -44,6 +44,19 @@ export class PostCardComponent implements OnInit {
     this.getUserById();
   }
 
+  ifLikedChecker() {
+    // if (
+    //   this.user?.attributes.likedPosts.data.filter(
+    //     (post: PostElm) => post.id == this.post.id
+    //   )
+    // ) {
+    //   this.isLiked = true;
+    // } else {
+    //   this.isLiked = false;
+    // }
+    // this.loading = false;
+  }
+
   @Input() post: PostElm = {} as PostElm;
   loginUserId: number = 0;
   userId: number | undefined = 0;
@@ -71,7 +84,7 @@ export class PostCardComponent implements OnInit {
       next: (data) => {
         this.user = data.data;
         console.log('user data from edit profile', this.user);
-        this.loading = false;
+        this.ifLikedChecker();
       },
       error: (error) => {
         console.log('user error', error);
