@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -10,16 +16,19 @@ import { PostService } from 'src/app/shared/services/post.service';
 import { EventEmitter } from '@angular/core';
 import { UserRes } from 'src/app/main/core/interfaces/user-res';
 import { UserService } from 'src/app/core/services/user.service';
+import { VideoPlayerComponent } from 'src/app/main/components/video-player/video-player.component';
 
 @Component({
   selector: 'app-post-card',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     InputTextModule,
     FormsModule,
     ButtonModule,
     ReactiveFormsModule,
+    VideoPlayerComponent,
   ],
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.css'],
@@ -36,6 +45,9 @@ export class PostCardComponent implements OnInit {
   }
 
   getUserId() {
+    this.post.attributes.image.includes('.mp4')
+      ? (this.isVideo = true)
+      : (this.isVideo = false);
     this.userId = this.post?.attributes.username.data.id;
     this.loginUserId = parseInt(`${localStorage.getItem('token')}`);
     this.userId == this.loginUserId
@@ -66,6 +78,7 @@ export class PostCardComponent implements OnInit {
   isSaved: boolean = false;
   loading: boolean = false;
   isLiked: boolean = false;
+  isVideo: boolean = false;
 
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();

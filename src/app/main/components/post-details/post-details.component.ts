@@ -38,6 +38,9 @@ export class PostDetailsComponent implements OnInit {
       next: (data) => {
         this.post = data.data;
         console.log('post info', this.post);
+        this.post?.attributes?.image?.includes('.mp4')
+          ? (this.isVideo = true)
+          : (this.isVideo = false);
         this.loading = false;
         this.getRelatedPosts();
       },
@@ -131,7 +134,7 @@ export class PostDetailsComponent implements OnInit {
   postId: number = 0;
   post: PostElm | undefined;
   relatedPosts: PostElm[] = [];
-
+  isVideo: boolean = false;
   loading: boolean = false;
   url: string = baseUrl;
   isSaved: boolean = false;

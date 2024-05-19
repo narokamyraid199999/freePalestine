@@ -97,14 +97,14 @@
               <app-video-player
                 class="w-[35rem]"
                 *ngIf="isVideo && imageUrl"
-                [videoUrl]="url + imageUrl"
+                [fromEdit]="true"
               ></app-video-player>
 
               <!-- post video -->
               <app-video-player
                 class="w-[35rem]"
                 *ngIf="isVideo && !imageUrl"
-                [videoUrl]="url + post?.attributes?.image"
+                [fromEdit]="true"
               ></app-video-player>
 
               <!-- updated image -->
@@ -154,7 +154,7 @@
               /> -->
             </div>
 
-            <div class="relative top-36" *ngIf="loading">
+            <div class="relative z-50 top-36" *ngIf="loading">
               <p-progressSpinner
                 styleClass="w-4rem h-4rem text-zinc-800"
                 strokeWidth="8"

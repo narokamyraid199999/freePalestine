@@ -1,11 +1,39 @@
 <!-- explore cart root -->
+
+<!-- <p-dialog
+  [draggable]="false"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50vw', height: '70vh', 'background-color': 'balck' }"
+>
+  <div class="h-full w-full">
+    <app-video-player
+      *ngIf="isVideo && post?.attributes?.image"
+      [videoUrl]="url + post?.attributes?.image"
+    ></app-video-player>
+  </div>
+</p-dialog> -->
+
 <div class="relative egy-container h-[21rem] rounded-3xl">
   <div class="relative h-full rounded-3xl">
     <img
+      *ngIf="!isVideo && url + post?.attributes?.image"
       class="absolute w-full h-full rounded-3xl"
       [src]="url + post?.attributes?.image"
       alt=""
     />
+    <span *ngIf="isVideo">
+      <img
+        class="absolute w-full h-full rounded-3xl"
+        src="https://img.freepik.com/premium-photo/sad-little-palestinian-child-palestinian-flag-background-stop-war-concept-help-palestine_948175-1946.jpg"
+        alt=""
+      />
+      <img
+        class="w-44 absolute left-1/3 top-1/3 drop-shadow-lg"
+        src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-09-933_512.gif"
+        alt=""
+      />
+    </span>
 
     <!-- user info -->
     <div

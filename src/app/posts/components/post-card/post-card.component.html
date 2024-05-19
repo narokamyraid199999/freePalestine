@@ -79,6 +79,11 @@
     </p>
   </div>
 
+  <app-video-player
+    *ngIf="isVideo && post?.attributes?.image"
+    [videoUrl]="url + post.attributes.image"
+  ></app-video-player>
+
   <!-- image part -->
   <div class="mt-6">
     <img
@@ -89,6 +94,7 @@
     />
   </div>
 
+  <!-- like and save part -->
   <div class="flex mt-6 justify-between items-center gap-x-5">
     <a class="heart" (click)="like()">
       <div class="flex items-center gap-x-2">

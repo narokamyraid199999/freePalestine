@@ -52,6 +52,9 @@ export class ExploreCardComponent implements OnInit {
       next: (data) => {
         this.user = data.data;
         console.log('user data', this.user);
+        this.post?.attributes.image.includes('.mp4')
+          ? (this.isVideo = true)
+          : (this.isVideo = false);
         this.loading = false;
       },
       error: (error) => {
@@ -65,7 +68,8 @@ export class ExploreCardComponent implements OnInit {
   @Input() myPosts: boolean = false;
   @Input() fromSaved: boolean = false;
   @Input() isMyLiked: boolean = false;
-
+  isVideo: boolean = false;
+  visible: boolean = false;
   @Output()
   postDeleted: EventEmitter<string> = new EventEmitter<string>();
 

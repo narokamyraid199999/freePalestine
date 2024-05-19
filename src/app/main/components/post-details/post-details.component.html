@@ -23,7 +23,15 @@
       <div class="grid grid-cols-5 xl:gap-y-0 gap-x-14 gap-y-14">
         <!-- iamge part -->
         <div class="col-span-5 xl:col-span-3">
-          <img [src]="url + post?.attributes?.image" alt="" />
+          <app-video-player
+            *ngIf="isVideo && url + post?.attributes?.image"
+            [videoUrl]="url + post?.attributes?.image"
+          ></app-video-player>
+          <img
+            *ngIf="!isVideo && url + post?.attributes?.image"
+            [src]="url + post?.attributes?.image"
+            alt=""
+          />
         </div>
 
         <!-- user info part -->
