@@ -173,6 +173,16 @@ export class ExploreCardComponent implements OnInit {
           .updateUserInfo(info, this.userId)
           .subscribe((data) => {
             this.loading = false;
+            let info = {
+              data: {
+                likes: parseInt(this.post?.attributes.likes) - 1,
+              },
+            };
+            this._postService
+              .updatePost(info, this.post?.id)
+              .subscribe((data) => {
+                console.log('post likes updated', data);
+              });
             this.deleteEvent.emit('deleted');
           });
       });

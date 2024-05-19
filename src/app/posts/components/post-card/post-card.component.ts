@@ -137,6 +137,16 @@ export class PostCardComponent implements OnInit {
             this.post?.attributes.likes
               ? (this.post.attributes.likes += 1)
               : (this.post.attributes.likes = 1);
+            let info = {
+              data: {
+                likes: this.post.attributes.likes,
+              },
+            };
+            this._postService
+              .updatePost(info, this.post.id)
+              .subscribe((data) => {
+                console.log('post likes updated', data);
+              });
           });
       });
     } else {
