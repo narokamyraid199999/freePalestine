@@ -44,6 +44,14 @@ export class EditPostComponent implements OnInit {
       next: (data) => {
         this.post = data.data;
         console.log('from edit post data', this.post);
+        this.post?.attributes.image.includes('.mp4')
+          ? (this.isVideo = true)
+          : (this.isVideo = false);
+        if (this.isVideo) {
+          this._postService.videoUrl.next(
+            `${this.url + this.post?.attributes.image}`
+          );
+        }
         this.postForm.setValue({
           content: this.post?.attributes.content,
           location: this.post?.attributes.location,
@@ -81,7 +89,7 @@ export class EditPostComponent implements OnInit {
   url: string = baseUrl;
   uploadedImage: any;
   loading: boolean = false;
-
+  isVideo: boolean = false;
   imageUploaded: uploadRes | undefined;
   imageUrl: string = '';
 
@@ -97,6 +105,9 @@ export class EditPostComponent implements OnInit {
         this.imageUploaded = data;
         console.log(this.imageUploaded);
         this.imageUrl = this.imageUploaded[0].url;
+        if (this.isVideo) {
+          this._postService.videoUrl.next(`${this.url + this.imageUrl}`);
+        }
         this.loading = false;
       },
       error: (error) => {

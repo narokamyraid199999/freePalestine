@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { baseUrl } from './autht.service';
 
 @Injectable({
@@ -8,6 +8,8 @@ import { baseUrl } from './autht.service';
 })
 export class PostService {
   constructor(private _Httpclient: HttpClient) {}
+
+  videoUrl: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   getAllPosts(): Observable<any> {
     return this._Httpclient.get(

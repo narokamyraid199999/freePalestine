@@ -32,6 +32,11 @@ import { MyPostsComponent } from './components/profile/components/my-posts/my-po
 import { MySavedPostsComponent } from './components/profile/components/my-saved-posts/my-saved-posts.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FilterPipe } from './core/filter.pipe';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 @NgModule({
   declarations: [
@@ -50,6 +55,7 @@ import { FilterPipe } from './core/filter.pipe';
     MyPostsComponent,
     MySavedPostsComponent,
     FilterPipe,
+    VideoPlayerComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
@@ -69,6 +75,10 @@ import { FilterPipe } from './core/filter.pipe';
     ButtonModule,
     PostCardComponent,
     SkeletonModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
   ],
   providers: [MessageService, PostService, UserService],
 })
