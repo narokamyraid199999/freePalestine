@@ -34,6 +34,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FilterPipe } from './core/filter.pipe';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { DialogModule } from 'primeng/dialog';
+import { FollowerDialogComponent } from './components/follower-dialog/follower-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DialogModule } from 'primeng/dialog';
     MyPostsComponent,
     MySavedPostsComponent,
     FilterPipe,
+    FollowerDialogComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

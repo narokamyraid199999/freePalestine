@@ -1,0 +1,51 @@
+<p-dialog
+  header="Followe"
+  [modal]="true"
+  [(visible)]="visible"
+  [draggable]="false"
+  [style]="{ width: '40rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <!-- profile -->
+  <div *ngFor="let user of follower" class="flex my-12 items-center gap-x-3">
+    <!-- profile pic -->
+    <div class="w-14">
+      <a
+        class="hover:text-violet-400 transition-all duration-200"
+        title="My Profile"
+        [routerLink]="['/main/profile', user.id]"
+      >
+        <img
+          class="w-16 h-16 rounded-full"
+          *ngIf="user?.attributes?.image"
+          [src]="url + user?.attributes?.image"
+          alt=""
+        />
+        <img
+          *ngIf="!user?.attributes?.image"
+          src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
+          alt=""
+        />
+      </a>
+    </div>
+    <!-- profile info -->
+
+    <div>
+      <a
+        class="hover:text-violet-400 transition-all duration-200"
+        title="My Profile"
+        [routerLink]="['/main/profile', user.id]"
+      >
+        <h2 *ngIf="!user" class="font-medium text-xl">Faizan</h2>
+        <h2 *ngIf="user?.attributes?.name" class="font-medium text-xl">
+          {{ user?.attributes?.name }}
+        </h2>
+      </a>
+
+      <p *ngIf="!user" class="text-slate-400">@fizan</p>
+      <p *ngIf="user?.attributes?.username" class="text-slate-400">
+        @{{ user?.attributes?.username }}
+      </p>
+    </div>
+  </div>
+</p-dialog>

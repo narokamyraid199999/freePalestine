@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserRes } from '../../core/interfaces/user-res';
 import { baseUrl } from 'src/app/shared/services/autht.service';
+import { FollowService } from '../../core/services/follow.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,10 +13,17 @@ import { baseUrl } from 'src/app/shared/services/autht.service';
 export class ProfileComponent implements OnInit {
   constructor(
     private _userService: UserService,
-    private _activateRouter: ActivatedRoute
+    private _activateRouter: ActivatedRoute,
+    private _followService: FollowService
   ) {}
   ngOnInit(): void {
+    this.followerReset();
     this.getUserId();
+  }
+
+  followerReset() {
+    this._followService.isOpend.next(false);
+    this._followService.follower.next([]);
   }
 
   getUserId() {
@@ -59,6 +67,15 @@ export class ProfileComponent implements OnInit {
         console.log('user error', error);
       },
     });
+  }
+
+  showFollow(follow: string) {
+    if (follow.includes('followers')) {
+      this._followService.follower.next(this.user?.attributes.followers.data);
+    } else {
+      this._followService.follower.next(this.user?.attributes.followings.data);
+    }
+    this._followService.isOpend.next(true);
   }
 
   follow() {
