@@ -7,7 +7,10 @@
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
 >
   <!-- profile -->
-  <div *ngFor="let user of follower" class="flex my-12 items-center gap-x-3">
+  <div
+    *ngFor="let user of follower"
+    class="flex my-1 py-3 items-center gap-x-3 transition-all duration-200 hover:bg-gray-50"
+  >
     <!-- profile pic -->
     <div class="w-14">
       <a
