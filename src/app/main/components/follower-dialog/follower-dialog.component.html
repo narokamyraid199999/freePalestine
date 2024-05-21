@@ -14,6 +14,7 @@
     <!-- profile pic -->
     <div class="w-14">
       <a
+        (click)="visible = false"
         class="hover:text-violet-400 transition-all duration-200"
         title="My Profile"
         [routerLink]="['/main/profile', user.id]"
@@ -35,6 +36,7 @@
 
     <div>
       <a
+        (click)="visible = false"
         class="hover:text-violet-400 transition-all duration-200"
         title="My Profile"
         [routerLink]="['/main/profile', user.id]"
