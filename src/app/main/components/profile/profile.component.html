@@ -63,8 +63,8 @@
               <div class="flex items-center gap-x-2">
                 <p class="text-indigo-400">
                   {{
-                    user?.attributes?.followers?.data
-                      ? user?.attributes?.followers?.data
+                    user?.attributes?.followers?.data.length
+                      ? user?.attributes?.followers?.data.length
                       : 0
                   }}
                 </p>
@@ -76,8 +76,8 @@
               <div class="flex items-center gap-x-2">
                 <p class="text-indigo-400">
                   {{
-                    user?.attributes?.following?.data
-                      ? user?.attributes?.following?.data
+                    user?.attributes?.followings?.data.length
+                      ? user?.attributes?.followings?.data.length
                       : 0
                   }}
                 </p>
@@ -88,8 +88,15 @@
         </div>
 
         <!-- edit button -->
-        <div class="hidden lg:inline-block" *ngIf="isMyProfile">
-          <a [routerLink]="['/main/editProfile', user?.id]">
+        <div class="hidden lg:inline-block">
+          <p-button
+            (onClick)="follow()"
+            *ngIf="!isMyProfile"
+            [loading]="loading"
+            styleClass=" bg-violet-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
+            label="Follow"
+          ></p-button>
+          <a *ngIf="isMyProfile" [routerLink]="['/main/editProfile', user?.id]">
             <p-button
               icon="fa-solid fa-pen-to-square"
               styleClass="bg-neutral-800  border-neutral-800 h-14 px-6 text-white  "

@@ -88,6 +88,7 @@ export class ExploreCardComponent implements OnInit {
   deleteEvent: EventEmitter<string> = new EventEmitter();
 
   like() {
+    
     let data = {
       data: {
         likes: !this.post?.attributes.likes

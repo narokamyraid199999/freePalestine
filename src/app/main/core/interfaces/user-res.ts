@@ -14,7 +14,7 @@ export interface Attributes {
   username: string;
   image: any;
   followers: Followers;
-  following: Following;
+  followings: Following;
   posts: Post;
   likedPosts: LikedPosts;
   savedPosts: SavedPosts;

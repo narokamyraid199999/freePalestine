@@ -27,6 +27,8 @@ export class ProfileComponent implements OnInit {
         this.logedUserId == this.userId
           ? (this.isMyProfile = true)
           : (this.isMyProfile = false);
+        // get loged user
+
         this.getUserById();
       }
     });
@@ -42,6 +44,7 @@ export class ProfileComponent implements OnInit {
   user: UserRes | undefined;
   logedUserId: number = 0;
   isMyProfile: boolean = false;
+  loading: boolean = false;
 
   getUserById() {
     this._userService.getUserById(this.userId).subscribe({
@@ -55,6 +58,53 @@ export class ProfileComponent implements OnInit {
       error: (error) => {
         console.log('user error', error);
       },
+    });
+  }
+
+  follow() {
+    this.loading = true;
+    setTimeout(() => {
+      this._userService
+        .getUserById(this.logedUserId)
+        .subscribe((logedUser: any) => {
+          let info = {
+            data: {
+              followings: [
+                ...logedUser.data.attributes.followings.data.map(
+                  (elm: any) => elm.id
+                ),
+                this.user?.id,
+              ],
+            },
+          };
+          this._userService
+            .updateUserInfo(info, this.logedUserId)
+            .subscribe((data) => {
+              console.log('data updated', data);
+              this.updateCurrentUserFollowers(logedUser.data.id);
+              this.loading = false;
+            });
+        });
+    }, 1000);
+  }
+
+  updateCurrentUserFollowers(id: number) {
+    this._userService.getUserById(this.logedUserId).subscribe((elm: any) => {
+      let info = {
+        data: {
+          followers: [
+            ...elm.data.attributes.followers.data.map((elm: any) => elm.id),
+            id,
+          ],
+        },
+      };
+      this._userService
+        .updateUserInfo(info, this.user?.id)
+        .subscribe((data) => {
+          console.log('user followers updated', data);
+          this.getUserById();
+          this.loading = false;
+        });
     });
   }
 }
