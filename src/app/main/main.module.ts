@@ -35,6 +35,7 @@ import { FilterPipe } from './core/filter.pipe';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { DialogModule } from 'primeng/dialog';
 import { FollowerDialogComponent } from './components/follower-dialog/follower-dialog.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { FollowerDialogComponent } from './components/follower-dialog/follower-d
     InputTextModule,
     ButtonModule,
     PostCardComponent,
+    InfiniteScrollModule,
     SkeletonModule,
   ],
   providers: [MessageService, PostService, UserService],

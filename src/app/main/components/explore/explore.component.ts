@@ -18,7 +18,7 @@ export class ExploreComponent implements OnInit {
     this.getAllPosts();
   }
 
-  getAllPosts(load: boolean = false): void {
+  getAllPosts(load: boolean = true): void {
     this.loading = load;
     this._postService.getAllPosts().subscribe({
       next: (data) => {

@@ -46,6 +46,12 @@
         <!-- user image and name -->
         <div class="flex gap-x-2 items-center">
           <img
+            *ngIf="myPosts"
+            class="w-10 h-10 rounded-full"
+            [src]="url + user?.attributes?.image"
+            alt=""
+          />
+          <img
             class="w-10 h-10 rounded-full"
             *ngIf="post?.attributes?.username?.data?.attributes?.image"
             [src]="url + post?.attributes?.username?.data?.attributes?.image"
@@ -53,11 +59,19 @@
           />
           <img
             class="w-8"
-            *ngIf="!post?.attributes?.username?.data?.attributes?.image"
+            *ngIf="
+              !post?.attributes?.username?.data?.attributes?.image && !myPosts
+            "
             src="https://sisksaapp.aou.edu.kw/AOUSISPLS/images/flag-8.png"
             alt=""
           />
           <a [routerLink]="['/main/postDetails', post?.id]">
+            <p
+              *ngIf="myPosts"
+              class="roboto-regular text-sm transition-all duration-200 hover:cursor-pointer hover:text-violet-400"
+            >
+              {{ user?.attributes?.name }}
+            </p>
             <p
               class="roboto-regular text-sm transition-all duration-200 hover:cursor-pointer hover:text-violet-400"
             >
