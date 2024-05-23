@@ -26,9 +26,27 @@ export class ProfileComponent implements OnInit {
     this._followService.follower.next([]);
   }
 
+  isFollowChecker() {
+    this.logedUserId = parseInt(`${localStorage.getItem('token')}`);
+    this._userService.getUserById(this.logedUserId).subscribe((data: any) => {
+      let res: UserRes = data.data;
+      if (
+        res.attributes.followings.data.filter(
+          (user: UserRes) => user.id == this.userId
+        ).length > 0
+      ) {
+        this.isFollow = true;
+      } else {
+        this.isFollow = false;
+      }
+      // console.log('from follwer checker', res);
+    });
+  }
+
   getUserId() {
     this._activateRouter.paramMap.subscribe((data) => {
       this.userId = parseInt(`${data.get('id')}`);
+      this.isFollowChecker();
       this._userService.userId.next(this.userId);
       if (this.userId) {
         this.logedUserId = parseInt(`${localStorage.getItem('token')}`);
@@ -53,6 +71,7 @@ export class ProfileComponent implements OnInit {
   logedUserId: number = 0;
   isMyProfile: boolean = false;
   loading: boolean = false;
+  isFollow: boolean = false;
 
   getUserById() {
     this._userService.getUserById(this.userId).subscribe({
@@ -78,31 +97,55 @@ export class ProfileComponent implements OnInit {
     this._followService.isOpend.next(true);
   }
 
-  follow() {
+  follow(action: string = 'follow') {
     this.loading = true;
     setTimeout(() => {
-      this._userService
-        .getUserById(this.logedUserId)
-        .subscribe((logedUser: any) => {
-          let info = {
-            data: {
-              followings: [
-                ...logedUser.data.attributes.followings.data.map(
-                  (elm: any) => elm.id
-                ),
-                this.user?.id,
-              ],
-            },
-          };
-          this._userService
-            .updateUserInfo(info, this.logedUserId)
-            .subscribe((data) => {
-              console.log('data updated', data);
-              this.updateCurrentUserFollowers(logedUser.data.id);
-              this.loading = false;
-            });
-        });
-    }, 1000);
+      if (action == 'follow') {
+        this._userService
+          .getUserById(this.logedUserId)
+          .subscribe((logedUser: any) => {
+            let info = {
+              data: {
+                followings: [
+                  ...logedUser.data.attributes.followings.data.map(
+                    (elm: any) => elm.id
+                  ),
+                  this.user?.id,
+                ],
+              },
+            };
+            this._userService
+              .updateUserInfo(info, this.logedUserId)
+              .subscribe((data) => {
+                console.log('data updated', data);
+                this.updateCurrentUserFollowers(logedUser.data.id);
+                this.loading = false;
+                this.isFollowChecker();
+              });
+          });
+      } else {
+        this._userService
+          .getUserById(this.logedUserId)
+          .subscribe((logedUser: any) => {
+            let info = {
+              data: {
+                followings: [
+                  ...logedUser.data.attributes.followings.data.filter(
+                    (elm: any) => elm.id != this.user?.id
+                  ),
+                ],
+              },
+            };
+            this._userService
+              .updateUserInfo(info, this.logedUserId)
+              .subscribe((data) => {
+                console.log('unfollow user successfully');
+              });
+            this.loading = false;
+            this.isFollowChecker();
+          });
+      }
+    }, 500);
   }
 
   updateCurrentUserFollowers(id: number) {

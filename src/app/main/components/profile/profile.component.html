@@ -101,13 +101,23 @@
 
         <!-- edit button -->
         <div class="hidden lg:inline-block">
-          <p-button
-            (onClick)="follow()"
-            *ngIf="!isMyProfile"
-            [loading]="loading"
-            styleClass=" bg-violet-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
-            label="Follow"
-          ></p-button>
+          <div>
+            <p-button
+              (onClick)="follow()"
+              *ngIf="!isMyProfile && !isFollow"
+              [loading]="loading"
+              styleClass=" bg-violet-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
+              label="Follow"
+            ></p-button>
+            <p-button
+              (onClick)="follow('unfollow')"
+              *ngIf="!isMyProfile && isFollow"
+              [loading]="loading"
+              styleClass=" bg-blue-500 px-8 text-sm mt-2 border-violet-500  merriweather-regular"
+              label="UnFollow"
+            ></p-button>
+          </div>
+
           <a *ngIf="isMyProfile" [routerLink]="['/main/editProfile', user?.id]">
             <p-button
               icon="fa-solid fa-pen-to-square"

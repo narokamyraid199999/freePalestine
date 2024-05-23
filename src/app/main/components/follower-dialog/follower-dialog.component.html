@@ -3,9 +3,11 @@
   [modal]="true"
   [(visible)]="visible"
   [draggable]="false"
-  [style]="{ width: '30rem', height: '20rem' }"
+  [style]="{ width: '23rem', height: '22rem' }"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
 >
+  <div *ngIf="follower.length == 0">No user</div>
+
   <!-- profile -->
   <div
     *ngFor="let user of follower"
