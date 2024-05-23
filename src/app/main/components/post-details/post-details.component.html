@@ -139,7 +139,7 @@
       </h2>
       <!-- cart grid -->
       <div
-        *ngIf="loading"
+        *ngIf="loading || relatedPosts.length == 0"
         class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12"
       >
         <div *ngFor="let elm of [1, 2, 3, 4, 5, 6]">
@@ -147,6 +147,7 @@
         </div>
       </div>
       <div
+        *ngIf="relatedPosts"
         class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10"
       >
         <app-explore-card
