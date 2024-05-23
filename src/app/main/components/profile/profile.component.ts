@@ -120,7 +120,9 @@ export class ProfileComponent implements OnInit {
                 console.log('data updated', data);
                 this.updateCurrentUserFollowers(logedUser.data.id);
                 this.loading = false;
-                this.isFollowChecker();
+                this.isFollow = !this.isFollow;
+
+                // this.isFollowChecker();
               });
           });
       } else {
@@ -140,9 +142,25 @@ export class ProfileComponent implements OnInit {
               .updateUserInfo(info, this.logedUserId)
               .subscribe((data) => {
                 console.log('unfollow user successfully');
+                let info = {
+                  data: {
+                    followers: this.user?.attributes.followers.data.filter(
+                      (follow: UserRes) => follow.id != this.logedUserId
+                    ),
+                  },
+                };
+
+                this._userService
+                  .updateUserInfo(info, this.user?.id)
+                  .subscribe((data) => {
+                    console.log('unfollow user successfully');
+
+                    this.loading = false;
+                    this.isFollow = !this.isFollow;
+                  });
               });
-            this.loading = false;
-            this.isFollowChecker();
+
+            // this.isFollowChecker();
           });
       }
     }, 500);
